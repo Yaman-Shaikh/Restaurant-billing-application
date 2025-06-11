@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-image: url('your-background.jpg'); /* Replace with your wood background */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 30px 25px;
+  border-radius: 20px;
+  width: 320px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.logo img {
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group i {
+  margin-right: 10px;
+  color: #ff9900;
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  font-size: 16px;
+}
+
+.signup-link {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.signup-link a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.sign-in-button {
+  background-color: #ff9900;
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sign-in-button:hover {
+  background-color: #e68a00;
+}

@@ -6,9 +6,8 @@ let bodyparser=require("body-parser");
 
 let session=require("express-session");
 
-app.use(bodyparser.urlencoded({extended:false}));
-
-
+app.use(express.urlencoded({ extended: true })); // to read form data
+app.use(express.json());
 app.use(bodyparser.json());
 app.use(session({
     secret:"8748u43",

@@ -8,23 +8,28 @@ exports.homepage=(req,res)=>{
 exports.loginpage=(req,res)=>{
     res.render("login.ejs");
 }
-exports.login=(req,res)=>{
-    let{username,password}=req.body;
-    let result=model.log(username,password);
-    result.then=((r)=>{
-        if(r.length>0)
-        {
-            req.session.yid=r[0].id;
-              console.log("session number is "+r[0].rid);
-            res.render("dashbord.ejs");
+exports.login = async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const { result, role } = await model.log(username, password);
+        console.log("user name ",username);
+        console.log("passwird ",password);
+        console.log("Query result ",result);
+        if (result.length === 0) {
+            return res.redirect("invalid");
         }
-        else{
-            res.render("login.ejs",{msg:"invalid username or password"});
-        }
-    });
-    result.catch((err)=>{
-        res.render("Error.ejs");
-    });
-        
-   
+
+        req.session.userid = result[0].id || result[0].staff_id;
+
+        const dashboard = role === "admin" ? "AdminDashBord" : "sheffdashboard";
+        res.render(dashboard, {user: result[0] });
+
+    } catch (err) {
+        console.error("Login error:", err);
+        res.render("error", { error: "Internal Server Error" });
+    }
 };
+exports.register=(req,res)=>{
+    res.send("invalid ");
+}

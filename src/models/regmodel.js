@@ -1,33 +1,24 @@
 let conn=require("../config/db.js");
-exports.log=(...info)=>{
- let promiss=new Promiss((resolve,reject)=>{
-let{username,password}=req.body;
-if(username=="admin")
-{
-    conn.query("select * from users where username=? and email=?",[username,password],(err,result)=>{
-    if(err)
-    {
-       reject(err);
-    }
-    else{
-        resolve(result);
-    }
+exports.log = (username, password) => {
+    return new Promise((resolve, reject) => {
+        if (username === "admin") {
+            conn.query(
+                "SELECT * FROM users WHERE username = ? AND password = ?",
+                [username, password],
+                (err, result) => {
+                    if (err) return reject(err);
+                    resolve({ result, role: "admin" });
+                }
+            );
+        } else {
+            conn.query(
+                "SELECT * FROM staff WHERE name = ? AND password = ?",
+                [username, password],
+                (err, result) => {
+                    if (err) return reject(err);
+                    resolve({ result, role: "staff" });
+                }
+            );
+        }
     });
-}
-else
-{
-     conn.query("select * from staff where name=? and email=?",[username,password],(err,result)=>{
-    if(err)
-    {
-       reject(err);
-    }
-    else{
-        resolve(result);
-    }
-    });
-}
-
-    
-    });
-    return promiss;
 };
