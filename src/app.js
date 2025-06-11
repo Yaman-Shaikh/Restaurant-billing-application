@@ -10,6 +10,11 @@ app.use(bodyparser.urlencoded({extended:false}));
 
 
 app.use(bodyparser.json());
+app.use(session({
+    secret:"8748u43",
+    resave:false,
+    saveUninitialized:false
+}));
 
 app.set("view engine","ejs");
 app.use(express.static("public"));

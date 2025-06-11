@@ -4,7 +4,6 @@ let conn=mysql.createConnection({
     user:"root",
     password:"root",
     database:"BillingApplication",
-
 });
 conn.connect((err)=>{
     if(err)
