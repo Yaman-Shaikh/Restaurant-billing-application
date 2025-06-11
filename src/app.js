@@ -1,3 +1,6 @@
+
+
+
 let express=require("express");
 let app=express();
 let reg=require("../src/routes/rout.js");
