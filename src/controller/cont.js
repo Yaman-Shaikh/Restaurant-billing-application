@@ -33,9 +33,7 @@ exports.login = async (req, res) => {
 exports.register=(req,res)=>{
     res.render("login.ejs",{msg:"invalid username or password"});
 }
-<<<<<<< HEAD
-=======
-
+ 
 exports.homepage1=(req,res)=>{
     res.render("homepage.ejs");
 }
@@ -67,4 +65,3 @@ exports.addcatagory=(req,res)=>{
         res.render("addcategory.ejs",{msg:"category not added ........................"});
     }
 }
->>>>>>> b8d14686e33d6f5b0a22d022ec04bb33a97f7c53
