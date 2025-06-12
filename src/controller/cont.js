@@ -33,3 +33,38 @@ exports.login = async (req, res) => {
 exports.register=(req,res)=>{
     res.render("login.ejs",{msg:"invalid username or password"});
 }
+<<<<<<< HEAD
+=======
+
+exports.homepage1=(req,res)=>{
+    res.render("homepage.ejs");
+}
+exports.About=(req,res)=>{
+    res.render("AboutUs.ejs");
+}
+exports.Menu=(req,res)=>{
+    res.render("Menu.ejs");
+}
+exports.Gallery=(req,res)=>{
+    res.render("Gallery.ejs")
+}
+
+exports.Contact=(req,res)=>{
+    res.render("Contact.ejs");
+}
+exports.AdCatagory=(req,res)=>{
+   res.render("addcategory.ejs",{msg:" "});
+}
+
+exports.addcatagory=(req,res)=>{
+    let{categoryName}=req.body;
+    let result=model.addcatagory(categoryName);
+    if(result==true)
+    {
+        res.render("addcategory.ejs",{msg:"category add successfully"});
+    }
+    else{
+        res.render("addcategory.ejs",{msg:"category not added ........................"});
+    }
+}
+>>>>>>> b8d14686e33d6f5b0a22d022ec04bb33a97f7c53
