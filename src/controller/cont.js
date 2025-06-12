@@ -6,8 +6,9 @@ exports.homepage=(req,res)=>{
     res.render("home.ejs");
 }
 exports.loginpage=(req,res)=>{
-    res.render("login.ejs");
+    res.render("login.ejs",{msg:""});
 }
+
 exports.login = async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -30,5 +31,9 @@ exports.login = async (req, res) => {
     }
 };
 exports.register=(req,res)=>{
+<<<<<<< HEAD
     res.send("invalid  ");
+=======
+    res.render("login.ejs",{msg:"invalid username or password"});
+>>>>>>> 0261c1d974d0ba2d569fc47a437ac2af21307147
 }
