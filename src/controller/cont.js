@@ -6,18 +6,19 @@ exports.homepage=(req,res)=>{
     res.render("home.ejs");
 }
 exports.loginpage=(req,res)=>{
-    res.render("login.ejs");
+    res.render("login.ejs",{msg:""});
 }
+
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
         const { result, role } = await model.log(username, password);
         console.log("user name ",username);
-        console.log("passwird ",password);
+        console.log("password ",password);
         console.log("Query result ",result);
         if (result.length === 0) {
-            return res.redirect("invalid");
+            return res.redirect("/register");
         }
 
         req.session.userid = result[0].id || result[0].staff_id;
@@ -31,5 +32,5 @@ exports.login = async (req, res) => {
     }
 };
 exports.register=(req,res)=>{
-    res.send("invalid ");
+    res.render("login.ejs",{msg:"invalid username or password"});
 }
