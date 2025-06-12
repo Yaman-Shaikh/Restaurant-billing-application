@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | Delicious Bites</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffaf0;
+      color: #333;
+    }
+
+    header {
+      background-color: #8B0000;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .gallery-title {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .gallery-title h2 {
+      font-size: 32px;
+      color: #8B0000;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .gallery-container img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-container img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    footer {
+      background-color: #8B0000;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Delicious Bites</h1>
+    <p>Our Moments Captured</p>
+  </header>
+
+  <div class="gallery-title">
+    <h2>Gallery</h2>
+    <p>Take a look at our dishes, ambiance, and happy guests!</p>
+  </div>
+
+  <div class="gallery-container">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Pizza">
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Interior">
+    <img src="https://3.bp.blogspot.com/-UC7O6Y4_BPc/UUBmPLOm99I/AAAAAAAABuw/T2qsS7g6bJw/s1600/CH.jpg" alt="Chikan handi">
+    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" alt="Restaurant View">
+    <img src="https://s.lightorangebean.com/media/20240914160809/Spicy-Penne-Pasta_-done.png" alt="Pasta">
+    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141" alt="Naan and Curry">
+    <img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f" alt="Dessert">
+    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90" alt="Dining Area">
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Delicious Bites. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

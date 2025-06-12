@@ -31,9 +31,22 @@ exports.login = async (req, res) => {
     }
 };
 exports.register=(req,res)=>{
-<<<<<<< HEAD
-    res.send("invalid  ");
-=======
     res.render("login.ejs",{msg:"invalid username or password"});
->>>>>>> 0261c1d974d0ba2d569fc47a437ac2af21307147
+}
+
+exports.homepage1=(req,res)=>{
+    res.render("homepage.ejs");
+}
+exports.About=(req,res)=>{
+    res.render("AboutUs.ejs");
+}
+exports.Menu=(req,res)=>{
+    res.render("Menu.ejs");
+}
+exports.Gallery=(req,res)=>{
+    res.render("Gallery.ejs")
+}
+
+exports.Contact=(req,res)=>{
+    res.render("Contact.ejs");
 }
