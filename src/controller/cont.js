@@ -11,7 +11,6 @@ exports.loginpage=(req,res)=>{
 
 exports.login = async (req, res) => {
     const { username, password } = req.body;
-
     try {
         const { result, role } = await model.log(username, password);
         console.log("user name ",username);
@@ -32,5 +31,9 @@ exports.login = async (req, res) => {
     }
 };
 exports.register=(req,res)=>{
+<<<<<<< HEAD
+    res.send("invalid  ");
+=======
     res.render("login.ejs",{msg:"invalid username or password"});
+>>>>>>> 0261c1d974d0ba2d569fc47a437ac2af21307147
 }
