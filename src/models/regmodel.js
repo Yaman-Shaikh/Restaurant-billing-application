@@ -19,3 +19,17 @@ exports.log = (username, password) => {
         }
     });
 };
+
+
+exports.AddCatagory=(categoryName)=>{
+    let flag=true;
+    conn.query("insert into category values(0,?)",[category],(err,result)=>{
+        if(err){
+            flag=false;
+            console.log(err);
+        }
+        else{
+            flag=true;
+        }
+    });return flag;
+}

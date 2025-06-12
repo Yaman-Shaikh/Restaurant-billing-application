@@ -11,4 +11,6 @@ router.get("/register",reg.register);
 router.get("/Menu",reg.Menu);
 router.get("/gallery",reg.Gallery);
 router.get("/Contact",reg.Contact);
+router.get("/AddCatagory",reg.AddCatagory);
+router.post("/addcatagory",reg.addcatagory);
 module.exports=router;

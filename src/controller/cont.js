@@ -50,3 +50,18 @@ exports.Gallery=(req,res)=>{
 exports.Contact=(req,res)=>{
     res.render("Contact.ejs");
 }
+exports.AddCatagory=(req,res)=>{
+   res.render("addcategory.ejs",{msg:" "});
+}
+
+exports.addcatagory=(req,res)=>{
+    let{categoryName}=req.body;
+    let result=module.AddCatagory(categoryName);
+    if(result==true)
+    {
+        res.render("addcategory.ejs",{msg:"category add successfully"});
+    }
+    else{
+        res.render("addcategory.ejs",{msg:"category not added ........................"});
+    }
+}
