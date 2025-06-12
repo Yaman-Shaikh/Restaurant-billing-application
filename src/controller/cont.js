@@ -33,3 +33,20 @@ exports.login = async (req, res) => {
 exports.register=(req,res)=>{
     res.render("login.ejs",{msg:"invalid username or password"});
 }
+
+exports.homepage1=(req,res)=>{
+    res.render("homepage.ejs");
+}
+exports.About=(req,res)=>{
+    res.render("AboutUs.ejs");
+}
+exports.Menu=(req,res)=>{
+    res.render("Menu.ejs");
+}
+exports.Gallery=(req,res)=>{
+    res.render("Gallery.ejs")
+}
+
+exports.Contact=(req,res)=>{
+    res.render("Contact.ejs");
+}
