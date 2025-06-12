@@ -20,10 +20,9 @@ exports.log = (username, password) => {
     });
 };
 
-
-exports.AddCatagory=(categoryName)=>{
+exports.addcatagory=(categoryName)=>{
     let flag=true;
-    conn.query("insert into category values(0,?)",[category],(err,result)=>{
+    conn.query("insert into category values(0,?)",[categoryName],(err,result)=>{
         if(err){
             flag=false;
             console.log(err);
