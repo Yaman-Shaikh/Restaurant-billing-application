@@ -8,7 +8,7 @@ exports.homepage=(req,res)=>{
 exports.loginpage=(req,res)=>{
     res.render("login.ejs",{msg:""});
 }
-
+ 
 exports.login = async (req, res) => {
     const { username, password } = req.body;
     try {
