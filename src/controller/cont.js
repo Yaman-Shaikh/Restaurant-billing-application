@@ -65,3 +65,16 @@ exports.addcatagory=(req,res)=>{
         res.render("addcategory.ejs",{msg:"category not added ........................"});
     }
 }
+exports.ViewCatagory=(req,res)=>{
+   model.ViewCatagory((err,result)=>{
+    if(err)
+    {
+        res.render("ViewCategory.ejs",{data:[]});
+    }
+    else{
+        res.render("ViewCategory.ejs",{data:result});
+        
+    }
+   });
+
+}
