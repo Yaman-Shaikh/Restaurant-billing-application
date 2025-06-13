@@ -47,3 +47,23 @@ exports.ViewCatagory=(callback)=>{
     });
 
 };
+exports.UpdateCategory=(id,callback)=>{
+    conn.query("select * from category where id=?",[id],(err,result)=>{
+       if(err)
+       {
+        return callback(err,null);
+       }
+       else{
+        return callback(null,result);
+       }
+    });
+}   
+exports.updatecategory = (name, id, callback) => {
+    conn.query("UPDATE category SET name=? WHERE id=?", [name, id], (err, result) => {
+        if (err) {
+            return callback(err, null);
+        } else {
+            return callback(null, result);
+        }
+    });
+};

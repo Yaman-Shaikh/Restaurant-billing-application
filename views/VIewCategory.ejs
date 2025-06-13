@@ -55,8 +55,8 @@
                     <tr>
                         <td><%= index + 1 %></td>
                         <td><%= item.name %></td>
-                        <td><a href="/update?id=<%= item.id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
-                        <td><a href="/delete?id=<%= item.id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
+                        <td><a href="/UpdateCategory?id=<%=item.id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                        <td><a href="/delete?id=<%=item.id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
                     </tr>
                 <% 
             });

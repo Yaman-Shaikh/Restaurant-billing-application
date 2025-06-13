@@ -73,8 +73,46 @@ exports.ViewCatagory=(req,res)=>{
     }
     else{
         res.render("ViewCategory.ejs",{data:result});
-        
+
     }
    });
 
 }
+
+exports.UpdateCategory=(req,res)=>{
+    let {id}=req.query;
+    model.UpdateCategory(id,(err,result)=>{
+        if(err)
+        {
+            return res.send("database error");
+        }   
+        if(result.length==0)
+        {
+            return res.send("category not found");
+        }
+        res.render("UpdateCategory.ejs",{record:result[0],msg:" "});
+    });
+}
+exports.updatecategory = (req, res) => {
+    let { name, id } = req.body;
+
+    model.updatecategory(name, id, (err, result) => {
+        if (err) {
+           
+            model.UpdateCategory(id, (err2, result2) => {
+                return res.render("UpdateCategory.ejs", {
+                    record: result2[0],
+                    msg: "Database error"
+                });
+            });
+        } else {
+            
+            model.UpdateCategory(id, (err2, result2) => {
+                return res.render("UpdateCategory.ejs", {
+                    record: result2[0],
+                    msg: "Update successful"
+                });
+            });
+        }
+    });
+};
