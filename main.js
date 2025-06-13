@@ -1,6 +1,5 @@
 let app=require("./src/app.js");
 
-app.listen(5000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("server started");
-});
-
+})

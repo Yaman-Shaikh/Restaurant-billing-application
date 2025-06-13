@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
 exports.register=(req,res)=>{
     res.render("login.ejs",{msg:"invalid username or password"});
 }
-
+ 
 exports.homepage1=(req,res)=>{
     res.render("homepage.ejs");
 }
@@ -64,4 +64,17 @@ exports.addcatagory=(req,res)=>{
     else{
         res.render("addcategory.ejs",{msg:"category not added ........................"});
     }
+}
+exports.ViewCatagory=(req,res)=>{
+   model.ViewCatagory((err,result)=>{
+    if(err)
+    {
+        res.render("ViewCategory.ejs",{data:[]});
+    }
+    else{
+        res.render("ViewCategory.ejs",{data:result});
+        
+    }
+   });
+
 }

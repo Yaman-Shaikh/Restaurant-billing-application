@@ -32,3 +32,18 @@ exports.addcatagory=(categoryName)=>{
         }
     });return flag;
 }
+
+exports.ViewCatagory=(callback)=>{
+    
+    conn.query("select * from category",(err,result)=>{
+        if(err)
+        {   
+            callback(err,null);
+        }
+        else{
+            callback(null,result);
+        }
+       
+    });
+
+};
