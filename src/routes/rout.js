@@ -14,4 +14,6 @@ router.get("/Contact",reg.Contact);
 router.get("/AddCatagory",reg.AdCatagory);
 router.post("/addcatagory",reg.addcatagory);
 router.get("/ViewCatagory",reg.ViewCatagory);
+router.get("/UpdateCategory",reg.UpdateCategory);
+router.post("/updatecategory",reg.updatecategory);
 module.exports=router;
