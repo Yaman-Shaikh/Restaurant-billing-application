@@ -100,19 +100,49 @@ exports.updatecategory = (req, res) => {
         if (err) {
            
             model.UpdateCategory(id, (err2, result2) => {
-                return res.render("UpdateCategory.ejs", {
-                    record: result2[0],
-                    msg: "Database error"
+                return res.render("ViewCategory.ejs", {
+                    data: result2,
+                  
                 });
             });
         } else {
-            
             model.UpdateCategory(id, (err2, result2) => {
-                return res.render("UpdateCategory.ejs", {
-                    record: result2[0],
-                    msg: "Update successful"
+                return res.render("ViewCategory.ejs", {
+                    data: result2,
+                   
                 });
             });
         }
     });
 };
+
+
+
+exports.DeleteCategory=(req,res)=>{
+    let {id}=req.query;
+        model.DeleteCategory(id,(err1,result1)=>{
+            
+                if(err1)
+                {
+                    console.log("errer while delete ");
+                    res.redirect("/ViewCatagory");
+                }
+                else{
+                    res.redirect("/ViewCatagory");
+                }
+        });
+}
+
+
+
+exports.Search=(req,res)=>{
+    let name=req.query.sname;
+    model.Search(name,(err1,result1)=>{
+        if(err1)
+        {
+            return res.sent("database error");
+        }
+        res.json(result1);
+    });
+
+}

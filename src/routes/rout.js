@@ -16,4 +16,7 @@ router.post("/addcatagory",reg.addcatagory);
 router.get("/ViewCatagory",reg.ViewCatagory);
 router.get("/UpdateCategory",reg.UpdateCategory);
 router.post("/updatecategory",reg.updatecategory);
+router.get("/DeleteCategory",reg.DeleteCategory);
+
+router.get("/Search",reg.Search);
 module.exports=router;

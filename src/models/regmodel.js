@@ -67,3 +67,31 @@ exports.updatecategory = (name, id, callback) => {
         }
     });
 };
+
+
+exports.DeleteCategory=(id,callback)=>{
+    
+    conn.query("delete from category where id=?",[id],(err,result)=>{
+        if(err)
+        {   
+            callback(err,null);
+        }
+        else{
+            callback(null,result);
+        }
+    });
+}
+
+exports.Search=(name,callback)=>{
+
+    let sql="select * from category where name like '%"+name+"%'";
+    conn.query(sql,(err,result)=>{
+        if(err)
+            {
+                callback(err,null);
+            }    
+            else{
+                callback(null,result);
+            }
+    });
+}
