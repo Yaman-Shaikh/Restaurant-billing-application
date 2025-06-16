@@ -32,5 +32,8 @@ router.get("/DeleteCategory",reg.DeleteCategory);
 
 router.get("/Search",reg.Search);
 router.get("/addmenu", upload.single('image'), reg.addmenu);
-// router.post("/AddMenu",reg.AddMenu);
+router.post("/AddMenu", upload.single('image'), reg.AddMenu);
+
+router.get("/ViewMenu",reg.ViewMenu);
+router.get("/SearchAjax",reg.SearchAjax);
 module.exports=router;

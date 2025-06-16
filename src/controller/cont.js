@@ -159,16 +159,75 @@ exports.addmenu=(req,res)=>{
         console.log("Categories fetched:", categories);
         res.render("AddMenu.ejs", { categories, msg: "" });
     });
-};
-
+ };
 // exports.AddMenu = (req, res) => {
-//     model.getCategories((err, categories) => {
-//         if (err) {
-//             console.error("Error loading categories:", err);
-//             return res.status(500).send("Internal Server Error");
+//     try {
+//         const { name, price, category, description } = req.body;
+//         const image = req.file ? req.file.filename : null;
+
+        
+//         if (!name || !price || !category || !description || !image) {
+//             return res.status(400).send("All fields are required");
 //         }
 
-//         res.render("AddMenu.ejs", { categories, msg: "" }); // now passing categories to EJS
-//     });
+//         model.AddMenu(name, category,price,  description, image, (err, result) => {
+//             if (err) {
+//                 console.error("Model Error:", err);
+//                 return res.status(500).send("Database error");
+//             }
+
+//             model.getCategories((err, categories) => {
+//                 if (err) {
+//                     console.error("Category Fetch Error:", err);
+//                     return res.status(500).send("Error loading categories");
+//                 }
+
+//                 res.render("AddMenu.ejs", {
+//                     categories,
+//                     msg: "Menu added successfully"
+//                 });
+//             });
+//         });
+//     } catch (error) {
+//         console.error("AddMenu Controller Error:", error);
+//         res.status(500).send("Server Error");
+//     }
 // };
+
+exports.AddMenu = (req, res) => {
+    const { name, price, category, description } = req.body;
+    const image = req.file.filename;
+
+    model.AddMenu(name, price, category, description, image, (err, result) => {
+        if (err) {
+            console.error("Insert error:", err);
+            return res.status(500).send("Failed to add menu");
+        }
+
+        model.getCategories((err, categories) => {
+            res.render("AddMenu.ejs", { categories, msg: "Data entered successfully" });
+        });
+    });
+};
+
+exports.ViewMenu=(req,res)=>{
+    model.ViewMenu((err,result)=>{
+        if(err)
+        {
+            return res.render("ViewMenu.ejs",{data:[]});
+        }
+        res.render("ViewMenu.ejs",{data:result});
+    });
+}
+
+exports.SearchAjax = (req, res) => {
+    const sname = req.query.sname;
+    model.SearchAjax(sname, (err, result) => {
+        if (err) {
+            console.error("Search error:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(result);
+    });
+};
 

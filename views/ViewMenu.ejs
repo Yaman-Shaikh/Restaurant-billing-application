@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Menu</title>
+    <link rel="stylesheet" href="/css/ViewMenu.css">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+</head>
+<body>
+    <input type="text" placeholder="enter the name of dish" onkeyup="searchMenu(this.value)" id="searchInput">
+    <h1>Menu List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Image</th>
+            
+                <th>update</th>
+                <th>delete</th>
+            </tr>
+        </thead>
+       <tbody id="tbody">
+    <% if (data.length > 0) { %>
+        <% data.forEach((item,index) => { %>
+            <tr>
+                <td><%= index+1 %></td>
+                <td><%= item.item_name %></td>
+                <td><%= item.price %></td>
+                <td><%= item.category_name %></td>
+                <td><%= item.description %></td>
+                <td><img src="/uploads/<%= item.image %>" alt="Image" width="100" height="100"></td>
+                <td><a href="/UpdateMenu?id=<%=item.id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                 <td><a href="/DeleteMenu?id=<%=item.id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
+            </tr>
+        <% }); %>
+    <% } else { %>
+        <tr><td colspan="8">No menu items found.</td></tr>
+    <% } %>
+
+</tbody>
+ </table>
+ <script type='text/javascript' src="/searchMenu.js"></script>
+
+</body>
+</html>

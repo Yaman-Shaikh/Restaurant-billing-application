@@ -1,3 +1,4 @@
+const e = require("express");
 let conn=require("../config/db.js");
 exports.log = (username, password) => {
     return new Promise((resolve, reject) => {
@@ -95,19 +96,7 @@ exports.Search=(name,callback)=>{
             }
     });
 }
-exports.AddMenu=(name, price, category, descripition, image, callback) => {
-    conn.qurry(
-        "INSERT INTO menu (name, price, category, descripition, image) VALUES (?, ?, ?, ?, ?)",
-        [name, price, category, descripition, image],
-        (err, result) => {
-            if (err) {
-                return callback(err, null);
-            } else {
-                return callback(null, result);
-            }
-        }
-    );
-}
+
 // Example: get all categories
 exports.getCategories = (callback) => {
     conn.query("SELECT  id ,name FROM category", (err,result)=>{
@@ -119,5 +108,55 @@ exports.getCategories = (callback) => {
             callback(null,result);
         }
        
-    }); // adjust SQL based on your table
+    });
 };
+// exports.AddMenu = (name, price, category, description, image, callback) => {
+//     conn.query(
+//         "INSERT INTO menu (item_name, category_id,price,  description, image) VALUES (?, ?, ?, ?, ?)",
+//         [name, price, category, description, image],
+//         (err, result) => {
+//             if (err) {
+//                 console.error("Insert Error:", err);
+//                 return callback(err, null);
+//             } else {
+//                 return callback(null, result);
+//             }
+//         }
+//     );
+// };
+
+exports.AddMenu = (name, price, category_id, description, image, callback) => {
+    conn.query(
+        "INSERT INTO menu (item_name, price, category_id, description, image) VALUES (?, ?, ?, ?, ?)",
+        [name, price, category_id, description, image],
+        (err, result) => {
+            if (err) return callback(err, null);
+            return callback(null, result);
+        }
+    );
+};
+
+exports.ViewMenu = (callback) => {
+    conn.query("SELECT m.id, m.item_name, m.price, c.name AS category_name, m.description, m.image FROM menu m JOIN category c ON m.category_id = c.id", (err, result) => {
+        if (err) {
+            console.error("View Menu Error:", err);
+            return callback(err, null);
+        } else {
+            return callback(null, result);
+        }
+    });
+};
+
+exports.SearchAjax = (sname, callback) => {
+    let sql = "SELECT m.id, m.item_name, m.price, c.name AS category_name, m.description, m.image FROM menu m JOIN category c ON m.category_id = c.id WHERE m.item_name LIKE ?";
+    conn.query(sql, [`%${sname}%`], (err, result) => {
+        if (err) {
+            console.error("Search Ajax Error:", err);
+            
+            return callback(err, null);
+        } else {
+            console.log("Search Result:", result);
+            return callback(null, result);
+        }
+    });
+}
