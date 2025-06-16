@@ -110,20 +110,7 @@ exports.getCategories = (callback) => {
        
     });
 };
-// exports.AddMenu = (name, price, category, description, image, callback) => {
-//     conn.query(
-//         "INSERT INTO menu (item_name, category_id,price,  description, image) VALUES (?, ?, ?, ?, ?)",
-//         [name, price, category, description, image],
-//         (err, result) => {
-//             if (err) {
-//                 console.error("Insert Error:", err);
-//                 return callback(err, null);
-//             } else {
-//                 return callback(null, result);
-//             }
-//         }
-//     );
-// };
+
 
 exports.AddMenu = (name, price, category_id, description, image, callback) => {
     conn.query(
@@ -160,3 +147,17 @@ exports.SearchAjax = (sname, callback) => {
         }
     });
 }
+
+exports.UpdateMenu = (id, callback) => {
+    conn.query("SELECT * FROM menu WHERE id = ?", [id], (err, result) => {
+        if (err) {
+            console.error("Update Menu Error:", err);
+            return callback(err, null);
+        }
+        if (result.length === 0) {
+            return callback(new Error("Menu item not found"), null);
+        }
+        return callback(null, result[0]);
+    });
+}       
+

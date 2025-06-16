@@ -36,4 +36,10 @@ router.post("/AddMenu", upload.single('image'), reg.AddMenu);
 
 router.get("/ViewMenu",reg.ViewMenu);
 router.get("/SearchAjax",reg.SearchAjax);
+
+
+
+
+
+router.get("/UpdateMenu",reg.UpdateMenu);
 module.exports=router;

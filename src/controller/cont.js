@@ -231,3 +231,26 @@ exports.SearchAjax = (req, res) => {
     });
 };
 
+
+
+exports.section=(req, res) => {
+    
+  const name = req.params.name;
+  res.render(name); // render about.ejs, menu.ejs, etc.
+}
+
+
+
+exports.UpdateMenu = (req, res) => {
+    const { id } = req.query;
+    model.UpdateMenu(id, (err, result) => {
+        if (err) {
+            console.error("Error fetching menu for update:", err);
+            return res.status(500).send("Database error");
+        }
+        if (result.length === 0) {
+            return res.status(404).send("Menu item not found");
+        }
+        res.render("UpdateMenu.ejs", { record: result[0], msg: "" });
+    });
+};
