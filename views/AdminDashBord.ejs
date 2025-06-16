@@ -6,103 +6,56 @@
   <title>Foodies Kitchen Admin Panel</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-    }
-    .sidebar {
-      width: 240px;
-      height: 100vh;
-      background-color: #fff;
-      position: fixed;
-      padding: 20px 0;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    }
-    .sidebar h4 {
-      text-align: center;
-      color: #dc3545;
-      margin-bottom: 30px;
-    }
-    .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      color: #333;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .nav-link i {
-      margin-right: 10px;
-      font-size: 1.2rem;
-    }
-    .nav-link:hover, .nav-link.active {
-      background-color: #ffe5e5;
-      color: #dc3545;
-    }
-    .submenu {
-      display: none;
-      flex-direction: column;
-      padding-left: 40px;
-    }
-    .submenu .nav-link {
-      font-weight: 400;
-      padding: 6px 0;
-      color: #666;
-    }
-    .submenu.show {
-      display: flex;
-    }
-    .main-content {
-      margin-left: 240px;
-      padding: 30px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h4><i class="bi bi-cup-hot-fill"></i> FOODIES KITCHEN</h4>
-    <a class="nav-link active"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+<div class="sidebar">
+  <h4><i class="bi bi-cup-hot-fill"></i> FOODIES KITCHEN</h4>
+  <a class="nav-link active"><i class="bi bi-house-door-fill"></i> Dashboard</a>
 
-    <div class="nav-link" onclick="toggleSubmenu('categoryMenu')">
-      <i class="bi bi-card-list"></i> Category
-    </div>
-    <div id="categoryMenu" class="submenu">
-      <a class="nav-link" href="/AddCatagory">Add Category</a>
-      <a class="nav-link" href="/ViewCatagory">View Category</a>
-    </div>
-
-    <div class="nav-link" onclick="toggleSubmenu('menuSection')">
-      <i class="bi bi-journal-text"></i> Menu
-    </div>
-    <div id="menuSection" class="submenu">
-      <a class="nav-link">Add Menu</a>
-      <a class="nav-link">View Menu</a>
-    </div>
-
-    <div class="nav-link" onclick="toggleSubmenu('staffSection')">
-      <i class="bi bi-person-fill"></i> Staffs
-    </div>
-    <div id="staffSection" class="submenu">
-      <a class="nav-link">Add Staff</a>
-      <a class="nav-link">View Staff</a>
-    </div>
-
-    <a class="nav-link"><i class="bi bi-grid-1x2-fill"></i> Tables</a>
-    <a class="nav-link"><i class="bi bi-bag-check-fill"></i> Orders</a>
-    <a class="nav-link"><i class="bi bi-receipt-cutoff"></i> Bills</a>
-    <a class="nav-link"><i class="bi bi-bar-chart-line-fill"></i> Reports</a>
+  <div class="nav-link" onclick="toggleSubmenu('categoryMenu')">
+    <i class="bi bi-card-list"></i> Category
   </div>
+  <div id="categoryMenu" class="submenu">
+    <a class="nav-link" href="/AddCatagory">Add Category</a>
+    <a class="nav-link" href="/ViewCatagory">View Category</a>
+  </div>
+
+  <div class="nav-link" onclick="toggleSubmenu('menuSection')">
+    <i class="bi bi-journal-text"></i> Menu
+  </div>
+  <div id="menuSection" class="submenu">
+    <a class="nav-link" href="/addmenu">Add Menu</a>
+    <a class="nav-link">View Menu</a>
+  </div>
+
+  <div class="nav-link" onclick="toggleSubmenu('staffSection')">
+    <i class="bi bi-person-fill"></i> Staffs
+  </div>
+  <div id="staffSection" class="submenu">
+    <a class="nav-link">Add Staff</a>
+    <a class="nav-link">View Staff</a>
+  </div>
+
+  <a class="nav-link"><i class="bi bi-grid-1x2-fill"></i> Tables</a>
+  <a class="nav-link"><i class="bi bi-bag-check-fill"></i> Orders</a>
+  <a class="nav-link"><i class="bi bi-receipt-cutoff"></i> Bills</a>
+  <a class="nav-link"><i class="bi bi-bar-chart-line-fill"></i> Reports</a>
+
+  
+  <div style="position: absolute; bottom: 20px; width: 100%;">
+    <a class="nav-link text-danger" href="/logout">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
+  </div>
+</div>
 
   <!-- Main Content Area -->
-  <div class="main-content">
-    <h2>Welcome to the Foodies Kitchen Admin Panel</h2>
-    <p>Here you can manage all the sections including menu, staff, orders, and reports.</p>
-  </div>
+  <%-include('NavBarAdmin')%>
 
   <script>
     function toggleSubmenu(id) {

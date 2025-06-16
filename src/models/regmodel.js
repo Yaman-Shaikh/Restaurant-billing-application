@@ -95,3 +95,29 @@ exports.Search=(name,callback)=>{
             }
     });
 }
+exports.AddMenu=(name, price, category, descripition, image, callback) => {
+    conn.qurry(
+        "INSERT INTO menu (name, price, category, descripition, image) VALUES (?, ?, ?, ?, ?)",
+        [name, price, category, descripition, image],
+        (err, result) => {
+            if (err) {
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        }
+    );
+}
+// Example: get all categories
+exports.getCategories = (callback) => {
+    conn.query("SELECT  id ,name FROM category", (err,result)=>{
+        if(err)
+        {   
+            callback(err,null);
+        }
+        else{
+            callback(null,result);
+        }
+       
+    }); // adjust SQL based on your table
+};

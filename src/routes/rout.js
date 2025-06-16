@@ -1,6 +1,18 @@
 let routs=require("express");
 let reg=require("../controller/cont.js");
 let router=routs.Router();
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage });
 
 router.get("/",reg.homepage);
 router.get("/log",reg.loginpage);
@@ -19,4 +31,6 @@ router.post("/updatecategory",reg.updatecategory);
 router.get("/DeleteCategory",reg.DeleteCategory);
 
 router.get("/Search",reg.Search);
+router.get("/addmenu", upload.single('image'), reg.addmenu);
+// router.post("/AddMenu",reg.AddMenu);
 module.exports=router;

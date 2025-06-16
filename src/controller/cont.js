@@ -1,6 +1,8 @@
 let regservice=require("../services/regservices.js");
 let model=require("../models/regmodel.js");
 let session =require("express-session");
+const upload = require("../middlewares/uplode.js");
+
 
 exports.homepage=(req,res)=>{
     res.render("home.ejs");
@@ -27,7 +29,7 @@ exports.login = async (req, res) => {
 
     } catch (err) {
         console.error("Login error:", err);
-        res.render("error", { error: "Internal Server Error" });
+        res.render("error", {error: "Internal Server Error" });
     }
 };
 exports.register=(req,res)=>{
@@ -47,7 +49,7 @@ exports.Gallery=(req,res)=>{
     res.render("Gallery.ejs")
 }
 
-exports.Contact=(req,res)=>{
+exports.Contact=(req,res)=>{ 
     res.render("Contact.ejs");
 }
 exports.AdCatagory=(req,res)=>{
@@ -146,3 +148,27 @@ exports.Search=(req,res)=>{
     });
 
 }
+
+exports.addmenu=(req,res)=>{
+    console.log("addmenu called");
+    model.getCategories((err, categories) => {
+        if (err) {
+            console.error("Error loading categories:", err);
+            return res.status(500).send("Internal Server Error");
+        }
+        console.log("Categories fetched:", categories);
+        res.render("AddMenu.ejs", { categories, msg: "" });
+    });
+};
+
+// exports.AddMenu = (req, res) => {
+//     model.getCategories((err, categories) => {
+//         if (err) {
+//             console.error("Error loading categories:", err);
+//             return res.status(500).send("Internal Server Error");
+//         }
+
+//         res.render("AddMenu.ejs", { categories, msg: "" }); // now passing categories to EJS
+//     });
+// };
+

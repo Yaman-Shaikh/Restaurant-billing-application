@@ -1,86 +1,184 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
+/* ======= General ======= */
 body {
-  background-image: url('your-background.jpg'); /* Replace with your wood background */
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
 }
 
+/* ======= Login Page ======= */
 .login-container {
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  padding: 30px 25px;
-  border-radius: 20px;
-  width: 320px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  margin: 80px auto;
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
   text-align: center;
 }
 
 .logo img {
-  width: 80px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  color: #000;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
   margin-bottom: 20px;
 }
 
-.input-group {
+.login-container h2 {
+  margin-bottom: 25px;
+  color: #dc3545;
+}
+
+.login-form .input-group {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
+  background-color: #f2f2f2;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
-.input-group i {
+.login-form .input-group i {
   margin-right: 10px;
-  color: #ff9900;
+  color: #888;
 }
 
-.input-group input {
+.login-form input {
   border: none;
+  background: none;
   outline: none;
   width: 100%;
-  background: transparent;
-  font-size: 16px;
-}
-
-.signup-link {
-  margin: 10px 0;
-  font-size: 14px;
-}
-
-.signup-link a {
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
+  font-size: 1rem;
 }
 
 .sign-in-button {
-  background-color: #ff9900;
+  width: 100%;
+  padding: 10px;
+  background-color: #dc3545;
   color: #fff;
   border: none;
-  padding: 10px 0;
-  width: 100%;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .sign-in-button:hover {
-  background-color: #e68a00;
+  background-color: #c82333;
+}
+
+.login-form p {
+  color: red;
+  margin-top: 15px;
+}
+
+/* ======= Admin Dashboard ======= */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: #fff;
+  position: fixed;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h4 {
+  text-align: center;
+  color: #dc3545;
+  margin-bottom: 30px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-link i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: #ffe5e5;
+  color: #dc3545;
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  padding-left: 40px;
+}
+
+.submenu .nav-link {
+  font-weight: 400;
+  padding: 6px 0;
+  color: #666;
+}
+
+.submenu.show {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 30px;
+}
+
+/* ======= Add Category Page ======= */
+.form-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+.btn-orange {
+  background-color: #ff5200;
+  color: #fff;
+}
+
+.btn-orange:hover {
+  background-color: #e04b00;
+}
+/* ======= View Category Page ======= */
+.category-container {
+  margin-top: 50px;
+}
+
+.category-container h2 {
+  font-weight: bold;
+  color: #dc3545;
+}
+
+#searchInput {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.table th, .table td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.fa-pen-to-square {
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.fa-trash {
+  font-size: 1.2rem;
 }

@@ -8,6 +8,7 @@ let path=require("path");
 let session=require("express-session");
 app.set("views",path.join(__dirname,"..","views"));
 app.use(express.urlencoded({ extended: true })); 
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyparser.json());
@@ -16,6 +17,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }));
+app.use('/uploads', express.static('uploads'));
 
 app.set("view engine","ejs");
 app.use(express.static("public"));
