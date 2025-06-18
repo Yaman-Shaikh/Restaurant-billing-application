@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Dashboard | Foodies Kitchen</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container-flex {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: white;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar h2 {
+      color: #ff4500;
+      font-weight: bold;
+    }
+
+    .nav-item {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background-color: #ff4500;
+      color: white;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-flex">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>🍽️ FOODIES<br>KITCHEN</h2>
+      <hr>
+      <div class="nav-item active" onclick="loadPage('/dashboard', this)">🏠 Dashboard</div>
+      <div class="nav-item" onclick="loadPage('/tables', this)">🪑 Dining Tables</div>
+      <div class="nav-item" onclick="loadPage('/menus', this)">📋 Menus</div>
+      <div class="nav-item" onclick="loadPage('/orders', this)">🧾 View Orders</div>
+      <div class="nav-item" onclick="loadPage('/reports', this)">📊 Reports</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content" id="contentArea">
+      <h3>Welcome to the Dashboard</h3>
+      <p>Select a section from the sidebar to view details.</p>
+    </div>
+  </div>
+
+  <script>
+    function loadPage(route, element) {
+      const content = document.getElementById("contentArea");
+
+      // Highlight selected
+      document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+      element.classList.add("active");
+
+      // Fetch and load content
+      fetch(route)
+        .then(res => res.text())
+        .then(html => {
+          content.innerHTML = html;
+        })
+        .catch(err => {
+          content.innerHTML = "<p>Error loading content</p>";
+          console.error("Load failed", err);
+        });
+    }
+  </script>
+</body>
+</html>

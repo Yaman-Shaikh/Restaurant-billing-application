@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Staff</title>
+    <link rel="stylesheet" href="/css/ViewStaff.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+<div class="container">
+
+    <!-- Search -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search staff..." onkeyup="searchstaff(this.value)">
+    </div>
+
+    <!-- Header -->
+    <h1>View Tables</h1>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Capacity</th>
+                    <th>Availability Status</th>
+                    
+                    <th>Update</th>
+                    <th>delete</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <% if (data.length === 0) { %>
+                    <tr>
+                        <td colspan="6" class="no-data">no table is there .</td>
+                    </tr>
+                <% } else { %>
+                    <% data.forEach((item, index) => { %>
+                        <tr>
+                            <td><%= item.table_id %></td>
+                            <td><%= item.capacity %></td>
+                            <td><%= item.availability_status %></td>
+                            <td><a href="/UpdateTable?id=<%= item.table_id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                             <td><a href="/DeleteTable?id=<%=item.table_id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+ <script type='text/javascript' src="/searchstaff.js"></script>
+
+
+</body>
+</html>
