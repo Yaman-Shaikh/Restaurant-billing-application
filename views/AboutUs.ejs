@@ -1,79 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us | Delicious Bites</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/About.css" />
 
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fffaf0;
-    }
+<section class="about-section container py-5" id="about">
+  
 
-    header {
-      background-color: #8B0000;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .about-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px;
-      background-color: #ffffff;
-      gap: 30px;
-    }
-
-    .about-section img {
-      width: 500px;
-      max-width: 90%;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .about-text {
-      max-width: 600px;
-    }
-
-    .about-text h2 {
-      color: #8B0000;
-      margin-bottom: 15px;
-    }
-
-    .about-text p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #333;
-    }
-
-    footer {
-      background-color: #8B0000;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-  </style>
-</head>
-<body>
-<%-include('NavBar.ejs')%>
-  <header>
+  <!-- <div class="text-center mb-5 delicious">
+    
     <h1>Delicious Bites</h1>
-    <p>Our Story</p>
-  </header>
+    <p class="lead">Our Story</p>
+  
 
-  <!-- About Us Section -->
-  <section class="about-section">
-    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" alt="Our Restaurant">
-    <div class="about-text">
+  </div> -->
+  <div class="row align-items-center ">
+     <header>
+    <h1>Delicious Bites</h1>
+    <p>Our Moments Captured</p>
+  </header>
+    <div class="col-md-6 mb-4 mb-md-0">
+      <br><br>
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" alt="Our Restaurant" class="img-fluid rounded shadow" />
+    </div>
+    <div class="col-md-6">
       <h2>About Us</h2>
       <p>
         Welcome to Delicious Bites — a place where flavors meet passion. Established in 2020, our restaurant is known for its warm hospitality, beautiful ambiance, and unforgettable meals.
@@ -85,11 +31,5 @@
         Whether you're celebrating a special occasion or just looking for a cozy place to dine, Delicious Bites is the perfect destination. Thank you for being part of our journey!
       </p>
     </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Delicious Bites. All rights reserved.</p>
-  </footer>
-
-</body>
-</html>
+  </div>
+</section>

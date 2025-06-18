@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/css/staffboard.css">
+<script src="https://kit.fontawesome.com/a2e0e6ad7e.js" crossorigin="anonymous"></script>
+
+<div class="dashboard-wrapper">
+  <div class="dashboard-header">
+    <h4>Welcome to Staff Dashboard</h4>
+    <a href="/logout" class="btn-logout">Logout</a>
+  </div>
+
+  <div class="card-container">
+    <!-- Total Categories -->
+    <div class="card-box">
+      <div class="icon-img">
+    <img src="https://img.icons8.com/ios-filled/50/tags.png" alt="Category Tags" width="30" height="30">
+
+      </div>
+      <h6>Total Categories</h6>
+      <h5><%= totalCategories %></h5>
+    </div>
+
+    <!-- Total Menus -->
+    <div class="card-box">
+      <div class="icon-img">
+       <img src="https://img.icons8.com/ios-filled/50/restaurant.png" alt="Menu Dish" width="30" height="30">
+
+      </div>
+      <h6>Total Menus</h6>
+      <h5><%= totalMenus %></h5>
+    </div>
+
+    <!-- Total Tables -->
+    <div class="card-box">
+      <div class="icon-img">
+        <img src="https://img.icons8.com/ios-filled/50/tableware.png" alt="Dining Table" width="30" height="30">
+
+      </div>
+      <h6>Total Tables</h6>
+      <h5><%= totalTables %></h5>
+      <div class="badges">
+        <span class="badge available">Available: <%= availableTables %></span>
+        <span class="badge occupied">Occupied: <%= occupiedTables %></span>
+      </div>
+    </div>
+
+    <!-- Total Orders -->
+    <div class="card-box">
+      <div class="icon-img">
+        <img src="https://img.icons8.com/ios-filled/50/receipt.png" alt="Total Orders" width="30" height="30">
+
+      </div>
+      <h6>Your Total Orders</h6>
+      <h5><%= totalOrders %></h5>
+      <div class="badges">
+        <span class="badge completed">Completed: <%= completedOrders %></span>
+        <span class="badge pending">Pending: <%= pendingOrders %></span>
+      </div>
+    </div>
+  </div>
+</div>

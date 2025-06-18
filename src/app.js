@@ -8,6 +8,7 @@ let path=require("path");
 let session=require("express-session");
 app.set("views",path.join(__dirname,"..","views"));
 app.use(express.urlencoded({ extended: true })); 
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyparser.json());
@@ -16,9 +17,18 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }));
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+app.use('/uploads', express.static('uploads'));
 
 app.set("view engine","ejs");
 app.use(express.static("public"));
+// ✅ Correctly import staff router
+const staffrout = require('./routes/staffrout.js');
+
+// ✅ Use the router
+app.use("/dashboard", staffrout);
 app.use("/",reg);
 
 

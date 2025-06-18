@@ -1,5 +1,4 @@
 
-
 let ajaximp=(str)=>{
     let xhttp=new XMLHttpRequest();
     xhttp.onreadystatechange=function(){

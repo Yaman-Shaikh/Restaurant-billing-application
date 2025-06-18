@@ -1,0 +1,100 @@
+/* staff.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #d0f0ec, #e4f9f5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2c3e50;
+  padding: 20px;
+}
+
+div {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.3s ease;
+}
+
+div:hover {
+  transform: scale(1.01);
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+/* Stylish input fields */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin: 10px 0 20px 0;
+  border: none;
+  border-radius: 12px;
+  background-color: #f5f8fa;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #74b9ff;
+}
+
+/* Search bar style */
+#searchInput {
+  padding-left: 40px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/622/622669.png');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  background-color: #eef5f9;
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Button style */
+#addStaffBtn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#addStaffBtn:hover {
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+  transform: translateY(-2px);
+}
+#addStaffBtn:active {
+  transform: translateY(0);
+}
