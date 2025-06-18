@@ -1,1 +1,37 @@
-<h1>i am a table</h1>
+<link rel="stylesheet" href="/css/stafftable.css">
+<div id="table-section">
+  <!-- your current available/occupied table layout here -->
+
+<div id="menu-view" class="hidden"></div>
+
+<h3 class="section-title">Available Tables</h3>
+<div class="table-grid">
+  <% tables.forEach(table => { %>
+    <% if (table.availability_status === "Available") { %>
+      <div class="table-card available">
+        <h5>Table - <%= table.table_id %></h5>
+        <p>Capacity: <%= table.capacity %> people</p>
+      <a href="/dashboard/menus?table_id=<%= table.table_id %>">
+  <button class="btn-order">Take Order</button>
+</a>
+
+      </div>
+    <% } %>
+  <% }); %>
+</div>
+
+<hr>
+
+<h3 class="section-title">Occupied Tables</h3>
+<div class="table-grid">
+  <% tables.forEach(table => { %>
+    <% if (table.availability_status === "Occupied") { %>
+      <div class="table-card occupied">
+        <h5>Table - <%= table.table_id %></h5>
+        <p>Capacity: <%= table.capacity %> people</p>
+        <button class="btn-order occupied-btn" disabled>Occupied</button>
+      </div>
+    <% } %>
+  <% }); %>
+</div>
+</div>

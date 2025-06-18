@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="/css/staffmenu.css">
+
+<a href="/dashboard/tables" class="btn-back">🔙 Back to View Dining Tables</a>
+
+<div class="menu-container">
+  <div class="menu-left">
+    <input type="text" placeholder="🔍 Search menu..." class="search-input">
+
+    <h2 class="menu-title">Our <span class="highlight">Menu</span></h2>
+    <p class="subtitle">Delicious meals prepared fresh for you</p>
+
+   
+
+    <div class="menu-grid">
+      <% menus.forEach(menu => { %>
+        <div class="menu-card">
+          <img src="/uploads/<%= menu.image %>" alt="<%= menu.item_name %>">
+          <h4><%= menu.item_name %></h4>
+          <p><%= menu.description %></p>
+          <div class="price">₹<%= menu.price %></div>
+          <br>  
+          <!-- Use link instead of inline -->
+          <a href="/menus/add?table_id=<%= tableId %>&menu_id=<%= menu.id %>" class="btn-add">Add to Order</a>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <div class="menu-right">
+    <h3>Current Order</h3>
+    <p><strong>Table ID:</strong> <%= tableId %></p>
+    <p><strong>Date:</strong> <%= currentDate %></p>
+    <hr>
+   <h4>Order Items</h4>
+<div class="order-items">
+  <!-- New items will be inserted here -->
+</div>
+
+  </div>
+</div>
+<script>
+  let selectedPrice = 0;
+  let selectedItem = "";
+  const orderItems = [];
+
+  function selectItem(name, price) {
+    selectedItem = name;
+    selectedPrice = price;
+    document.getElementById('orderForm').style.display = 'block';
+    document.getElementById('itemName').innerText = name;
+    document.getElementById('itemPrice').innerText = "₹" + price;
+    document.getElementById('qty').value = 1;
+    document.getElementById('total').innerText = price;
+  }
+
+  function adjustQty(change) {
+    let qtyInput = document.getElementById('qty');
+    let qty = parseInt(qtyInput.value) + change;
+    if (qty < 1) qty = 1;
+    qtyInput.value = qty;
+    document.getElementById('total').innerText = qty * selectedPrice;
+  }
+
+  // ✅ Add item to order list when confirmed
+  document.querySelector('.btn-confirm').addEventListener('click', function () {
+    const qty = parseInt(document.getElementById('qty').value);
+    const total = qty * selectedPrice;
+
+    // Save in array (optional for future use)
+    orderItems.push({
+      name: selectedItem,
+      price: selectedPrice,
+      quantity: qty,
+      total: total
+    });
+
+    // Add to UI
+    const orderSection = document.querySelector('.menu-right .order-items');
+    const itemHTML = `
+      <div class="order-item">
+        <p><strong>${selectedItem}</strong> x ${qty} = ₹${total}</p>
+      </div>
+    `;
+    orderSection.insertAdjacentHTML('beforeend', itemHTML);
+
+    // Reset form
+    document.getElementById('orderForm').style.display = 'none';
+  });
+</script>

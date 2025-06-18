@@ -23,22 +23,54 @@ const queries = {
     ${queries.completedOrders};
     ${queries.pendingOrders};
   `;
+db.query(sql, (err, results) => {
+  if (err) {
+    console.error("DB error:", err);
+    return res.status(500).send("Database error");
+  }
 
-  db.query(sql, (err, results) => {
+  res.render("staff/staffdashboard", {
+    totalCategories: results[0][0].count,
+    totalMenus: results[1][0].count,
+    totalTables: results[2][0].count,
+    availableTables: results[3][0].count,
+    occupiedTables: results[4][0].count,
+    totalOrders: results[5][0].count,
+    completedOrders: results[6][0].count,
+    pendingOrders: results[7][0].count
+  });
+});
+}
+
+
+
+
+exports.getTablesPage = (req, res) => {
+  const query = "SELECT * FROM dinning_table";
+  
+  db.query(query, (err, results) => {
     if (err) {
       console.error("DB error:", err);
-      return res.status(500).send("Database error");
+      return res.status(500).send("Error fetching tables");
     }
 
-    res.render("staff/dashboard", {
-      totalCategories: results[0][0].count,
-      totalMenus: results[1][0].count,
-      totalTables: results[2][0].count,
-      availableTables: results[3][0].count,
-      occupiedTables: results[4][0].count,
-      totalOrders: results[5][0].count,
-      completedOrders: results[6][0].count,
-      pendingOrders: results[7][0].count
+    res.render("staff/tables", { tables: results }); // pass table data to view
+  });
+};
+exports.getMenusPage = (req, res) => {
+  const tableId = req.query.table_id;
+
+  const menuQuery = "SELECT * FROM menu";
+  db.query(menuQuery, (err, menus) => {
+    if (err) {
+      console.error("Error loading menus:", err);
+      return res.status(500).send("Menu load error");
+    }
+
+    res.render("staff/menu", {
+      tableId,
+      menus,
+      currentDate: new Date().toLocaleDateString()
     });
   });
 };
