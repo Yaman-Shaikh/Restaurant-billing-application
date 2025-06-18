@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/staff.css">
+
+</head>
+<body>
+    <form action="/AddStaff" method="post">
+    <div>
+      
+        <h1>Add Staff</h1>
+
+        <input type="text" placeholder="Enter Staff Name" name="name" id="staffName">
+        <br>
+        <input type="text" placeholder="Enter Staff Email" name="email" id="staffEmail"><br>
+        <input type="text" placeholder="Enter Staff Phone" name="contact_no" id="staffcontact"><br>
+        <input type="text" placeholder="enter the salary of staff" name="salary" id="staffSalary"><br>
+        <input type="password" placeholder="Enter Staff Password" name="password" id="staffPassword"><br>
+        <button id="addStaffBtn">Add Staff</button>
+<br>
+<p><%=msg%></p>
+    </div>
+    </form>
+</body>
+</html>

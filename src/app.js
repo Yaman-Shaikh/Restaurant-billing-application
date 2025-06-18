@@ -17,6 +17,9 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }));
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 app.use('/uploads', express.static('uploads'));
 
 app.set("view engine","ejs");

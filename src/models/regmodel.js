@@ -30,6 +30,7 @@ exports.addcatagory=(categoryName)=>{
         }
         else{
             flag=true;
+        
         }
     });return flag;
 }
@@ -147,17 +148,139 @@ exports.SearchAjax = (sname, callback) => {
         }
     });
 }
-
-exports.UpdateMenu = (id, callback) => {
-    conn.query("SELECT * FROM menu WHERE id = ?", [id], (err, result) => {
+exports.SearchStaff = (sname, callback) => {
+    const searchPattern = `%${sname}%`;
+    const sql = "SELECT * FROM staff WHERE name LIKE ?";
+    conn.query(sql, [searchPattern], (err, result) => {
         if (err) {
-            console.error("Update Menu Error:", err);
             return callback(err, null);
         }
-        if (result.length === 0) {
-            return callback(new Error("Menu item not found"), null);
-        }
-        return callback(null, result[0]);
+        callback(null, result);
     });
-}       
+};
 
+
+
+exports.getAllCategories = (callback) => {
+    conn.query("SELECT name FROM category", (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result); 
+    });
+};
+exports.getMenuItemById = (id, callback) => {
+    const sql = "SELECT * FROM menu WHERE id = ?";
+    conn.query(sql, [id], callback);
+};
+
+exports.DeleteMenu = (id, callback) => {
+    const sql = "DELETE FROM menu WHERE id = ?";
+    conn.query(sql, [id], (err, result) => {
+        if (err) return callback(err, null);
+        return callback(null, result);
+    });
+};
+
+
+
+exports.updateMenu = (id, name, price, category_id, description, image, callback) => {
+    const sql = "UPDATE menu SET item_name = ?, price = ?, category_id = ?, description = ?, image = ? WHERE id = ?";
+    conn.query(sql, [name, price, category_id, description, image, id], (err, result) => {
+        if (err) return callback(err, null);
+        return callback(null, result);
+    });
+};
+
+exports.AddStaff = (name, email, contact_no, salary, password) => {
+    return new Promise((resolve, reject) => {
+        const sql = "INSERT INTO staff (name, email, contact_no, salary, password) VALUES (?, ?, ?, ?, ?)";
+        conn.query(sql, [name, email, contact_no, salary, password], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+};
+
+
+
+exports.ViewStaff=(callback)=>{
+    conn.query("select * from staff",(err,result)=>{
+        if(err)
+        {   
+            callback(err,null);
+        }
+        else{
+            callback(null,result);
+        }
+       
+    });
+}
+
+exports.GetStaffById = (id, callback) => {
+    conn.query("SELECT * FROM staff WHERE staff_id = ?", [id], (err, result) => {
+        callback(err, result);
+    });
+};
+
+exports.UpdateStaff = (id, name, email, contact_no, salary, password, callback) => {
+    const sql = `
+        UPDATE staff SET name = ?, email = ?, contact_no = ?, salary = ?, password = ?
+        WHERE staff_id = ?
+    `;
+    conn.query(sql, [name, email, contact_no, salary, password, id], callback);
+};
+
+exports.DeleteStaff = (id, callback) => {
+    conn.query("DELETE FROM staff WHERE staff_id = ?", [id], callback);
+};
+
+// In model.js
+exports.AddTable = (tableNumber, capacity, availability) => {
+    return new Promise((resolve, reject) => {
+        const sql = "INSERT INTO dinning_table (table_id, capacity, availability_status) VALUES (?, ?, ?)";
+        conn.query(sql, [tableNumber, capacity, availability], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.affectedRows); // this will be 1 if insert was successful
+            }
+        });
+    });
+};
+
+
+exports.ViewTables=(callback)=>{
+    conn.query("select * from dinning_table",(err,result)=>{
+        callback(err, result);
+    });
+}
+
+exports.UpdateTable = (id, callback) => {
+    conn.query("SELECT * FROM dinning_table WHERE table_id = ?", [id], (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result);
+    });
+};
+
+// regmodel.js
+exports.updatetable = (id, capacity, availability_status, callback) => {
+    const sql = "UPDATE dinning_table SET capacity = ?, availability_status = ? WHERE table_id = ?";
+    conn.query(sql, [capacity, availability_status, id], (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+    });
+};
+
+
+exports.DeleteTable = (id, callback) => {
+    const sql = "DELETE FROM dinning_table WHERE table_id = ?";
+    conn.query(sql, [id], (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+    });
+};

@@ -47,12 +47,20 @@
       </div>
 
 <div>
-    <label for="name">category_name</label>
-    <select class="form-select" id="category_name" name="category_name" required>
-      <option value="" disabled selected>Select Category</option>
-      <% categories.forEach(category => { %>
-        <option value="<%= record.category_name %>" <%= record.category_name === record.category_name ? 'selected' : '' %>><%= record.category_name %></option>
-      <% }) %>  
+<label for="category">Category</label>
+<select class="form-select" id="category" name="category" required>
+  <option value="">Select Category</option>
+  <% categories.forEach(category => { %>
+   <option value="<%= category.id %>" <%= category.id == record.category_id ? 'selected' : '' %>>
+
+      <%= category.name %>
+    </option>
+  <% }) %>
+</select>
+
+
+
+
 </div>
 
       <div class="mb-3">

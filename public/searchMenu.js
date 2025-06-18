@@ -48,6 +48,6 @@ let searchMenu=(str)=>{
             });
         }
     };
-    xhttp.open("get","/SearchAjax?sname=" +str,true);
+    xhttp.open("get","/SearchStaff?sname=" +str,true);
     xhttp.send();
 }

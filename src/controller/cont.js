@@ -10,7 +10,6 @@ exports.homepage=(req,res)=>{
 exports.loginpage=(req,res)=>{
     res.render("login.ejs",{msg:""});
 }
-
 exports.login = async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -18,18 +17,30 @@ exports.login = async (req, res) => {
         console.log("user name ",username);
         console.log("password ",password);
         console.log("Query result ",result);
+
         if (result.length === 0) {
             return res.redirect("/register");
         }
 
-        req.session.userid = result[0].id || result[0].staff_id;
+        const userId = result[0].id || result[0].staff_id;
 
+        // Set session
+        req.session.userid = userId;
+
+        // Set a cookie
+        res.cookie("user_id", userId, {
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            httpOnly: true,
+            secure: false, // set to true if using HTTPS
+        });
+
+        // Set dashboard view
         const dashboard = role === "admin" ? "AdminDashBord" : "sheffdashboard";
-        res.render(dashboard, {user: result[0] });
+        res.render(dashboard, { user: result[0] });
 
     } catch (err) {
         console.error("Login error:", err);
-        res.render("error", {error: "Internal Server Error" });
+        res.render("error", { error: "Internal Server Error" });
     }
 };
 exports.register=(req,res)=>{
@@ -58,7 +69,8 @@ exports.AdCatagory=(req,res)=>{
 
 exports.addcatagory=(req,res)=>{
     let{categoryName}=req.body;
-    let result=model.addcatagory(categoryName);
+    let result=model
+    .addcatagory(categoryName);
     if(result==true)
     {
         res.render("addcategory.ejs",{msg:"category add successfully"});
@@ -80,7 +92,6 @@ exports.ViewCatagory=(req,res)=>{
    });
 
 }
-
 exports.UpdateCategory=(req,res)=>{
     let {id}=req.query;
     model.UpdateCategory(id,(err,result)=>{
@@ -104,7 +115,6 @@ exports.updatecategory = (req, res) => {
             model.UpdateCategory(id, (err2, result2) => {
                 return res.render("ViewCategory.ejs", {
                     data: result2,
-                  
                 });
             });
         } else {
@@ -117,7 +127,6 @@ exports.updatecategory = (req, res) => {
         }
     });
 };
-
 
 
 exports.DeleteCategory=(req,res)=>{
@@ -160,40 +169,6 @@ exports.addmenu=(req,res)=>{
         res.render("AddMenu.ejs", { categories, msg: "" });
     });
  };
-// exports.AddMenu = (req, res) => {
-//     try {
-//         const { name, price, category, description } = req.body;
-//         const image = req.file ? req.file.filename : null;
-
-        
-//         if (!name || !price || !category || !description || !image) {
-//             return res.status(400).send("All fields are required");
-//         }
-
-//         model.AddMenu(name, category,price,  description, image, (err, result) => {
-//             if (err) {
-//                 console.error("Model Error:", err);
-//                 return res.status(500).send("Database error");
-//             }
-
-//             model.getCategories((err, categories) => {
-//                 if (err) {
-//                     console.error("Category Fetch Error:", err);
-//                     return res.status(500).send("Error loading categories");
-//                 }
-
-//                 res.render("AddMenu.ejs", {
-//                     categories,
-//                     msg: "Menu added successfully"
-//                 });
-//             });
-//         });
-//     } catch (error) {
-//         console.error("AddMenu Controller Error:", error);
-//         res.status(500).send("Server Error");
-//     }
-// };
-
 exports.AddMenu = (req, res) => {
     const { name, price, category, description } = req.body;
     const image = req.file.filename;
@@ -231,7 +206,17 @@ exports.SearchAjax = (req, res) => {
     });
 };
 
+exports.SearchStaff = (req, res) => {
+    const sname = req.query.sname || "";
 
+    model.SearchStaff(sname, (err, result) => {
+        if (err) {
+            console.error("Search error:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json(result);
+    });
+};
 
 exports.section=(req, res) => {
     
@@ -240,17 +225,233 @@ exports.section=(req, res) => {
 }
 
 
-
 exports.UpdateMenu = (req, res) => {
     const { id } = req.query;
-    model.UpdateMenu(id, (err, result) => {
-        if (err) {
-            console.error("Error fetching menu for update:", err);
-            return res.status(500).send("Database error");
+
+    model.getMenuItemById(id, (err1, menuResult) => {
+        if (err1) {
+            return res.status(500).send("Error fetching menu item");
         }
-        if (result.length === 0) {
+
+        if (!menuResult || menuResult.length === 0) {
             return res.status(404).send("Menu item not found");
         }
-        res.render("UpdateMenu.ejs", { record: result[0], msg: "" });
+
+        model.getAllCategories((err2, categoryResult) => {
+            if (err2) {
+                return res.status(500).send("Error fetching categories");
+            }
+
+            res.render("UpdateMenu.ejs", {
+                record: menuResult[0],         // ✅ Now defined correctly
+                categories: categoryResult,
+                msg: ""
+            });
+        });
     });
 };
+
+exports. DeleteMenu = (req, res) => {
+    const { id } = req.query;
+    model.DeleteMenu(id, (err, result) => {
+        if (err) {
+            console.error("Delete error:", err);
+            return res.status(500).send("Failed to delete menu item");
+        }
+        model.ViewMenu((err1, result1) => {
+            if (err1) {
+                return res.status(500).send("Error fetching updated menu");
+            }
+            res.render("ViewMenu.ejs", { data: result1 });
+        });
+    });
+};
+
+
+
+exports.Staff=(req,res)=>{
+    res.render("Staff.ejs",{msg:" "});
+}
+
+exports.AddStaff = async (req, res) => {
+    let { name, email, contact_no, salary, password } = req.body;
+
+    try {
+        await model.AddStaff(name, email, contact_no, salary, password);
+        res.render("staff.ejs", { msg: "Staff added successfully" });
+    } catch (err) {
+        console.error("Error adding staff:", err); 
+        res.render("staff.ejs", { msg: "Error adding staff. Please try again." });
+    }
+};
+
+
+exports.updateMenu = (req, res) => {
+    let { id, name, price, category, description } = req.body;
+    let image = req.file ? req.file.filename : null;
+
+
+    const category_id = parseInt(category);
+    if (isNaN(category_id)) {
+        return res.status(400).send("Invalid category selected.");
+    }
+
+    model.updateMenu(id, name, price, category_id, description, image, (err, result) => {
+        if (err) {
+            console.error("Update error:", err);
+            return res.status(500).send("Failed to update menu");
+        }
+
+        model.ViewMenu((err1, result1) => {
+            if (err1) {
+                return res.status(500).send("Error fetching updated menu");
+            }
+            res.render("ViewMenu.ejs", { data: result1 });
+        });
+    });
+};
+
+
+exports.ViewStaff = (req, res) => {
+    model.ViewStaff((err, result) => {
+        if (err) {
+            console.error("Error fetching staff:", err);
+            return res.status(500).send("Database error");
+        }
+        res.render("ViewStaff.ejs", { data: result});
+    });
+};
+
+// Render update form
+exports.GetUpdateStaffForm = (req, res) => {
+    const id = req.query.id;
+
+    model.GetStaffById(id, (err, result) => {
+        if (err) {
+            return res.status(500).send("Error fetching staff");
+        }
+
+        if (!result || result.length === 0) {
+            return res.status(404).send("Staff not found");
+        }
+
+        res.render("updateStaffForm", { staff: result[0] });
+    });
+};
+
+
+// Handle update form submission
+exports.UpdateStaff = (req, res) => {
+    const { id, name, email, contact_no, salary, password } = req.body;
+    model.UpdateStaff(id, name, email, contact_no, salary, password, (err, result) => {
+        if (err) {
+            return res.status(500).send("Error updating staff");
+        }
+        res.redirect("/ViewStaff"); // or wherever your staff list page is
+    });
+};
+
+// Handle deletion
+exports.DeleteStaff = (req, res) => {
+    const id = req.query.id;
+    model.DeleteStaff(id, (err, result) => {
+        if (err) {
+            return res.status(500).send("Error deleting staff");
+        }
+        res.redirect("/ViewStaff");
+    });
+};
+
+
+
+exports.table=(req,res)=>{
+    res.render("Tables.ejs",{msg:"..."});
+}// In controller.js
+
+exports.AddTable = (req, res) => {
+    const { tableNumber, capacity, availability } = req.body;
+
+    console.log("Incoming data:", tableNumber, capacity, availability); // helpful debug
+
+    model.AddTable(tableNumber, capacity, availability)
+        .then((affectedRows) => {
+            console.log("Affected rows:", affectedRows);
+            if (affectedRows > 0) {
+                res.render("Tables", { msg: "Data added to database" });
+            } else {
+                res.render("Tables", { msg: "Failed to add data to database" });
+            }
+        })
+        .catch((err) => {
+            console.error("Database error:", err);
+            res.render("Tables", { msg: "Internal server error" });
+        });
+};
+
+
+exports.ViewTables=(req,res)=>{
+    model.ViewTables((err,result)=>{
+        if(err)
+        {
+            console.log("database error");
+             return res.status(500).send("Database error");
+        }
+        res.render("ViewTables.ejs",{data:result});
+
+    });
+}
+exports.UpdateTable = (req, res) => {
+    let id = req.query.id;
+console.log("UpdateTable called with id:",id);
+    model.UpdateTable(id, (err, result) => {
+        if (err) {
+            return res.status(500).send("Error updating table");
+        }
+
+        if (!result || result.length === 0) {
+            return res.status(404).send("Table not found");
+        }
+
+        res.render("UpdateTable.ejs", { data: result[0], msg: " " });
+    });
+};
+// cont.js
+exports.updatetable = (req, res) => {
+  
+    const { id, capacity, availability_status } = req.body;
+
+    if (!id || !capacity || !availability_status) {
+        return res.status(400).send("Missing data in request body");
+    }
+
+    model.updatetable(id, capacity, availability_status, (err, result) => {
+        if (err) {
+            return res.status(500).send("Failed to update table");
+        }
+
+        model.ViewTables((err1, result1) => {
+            if (err1) {
+                return res.status(500).send("Failed to fetch updated tables");
+            }
+            res.render("ViewTables.ejs", { data: result1 });
+        });
+    });
+};
+
+
+exports.DeleteTable=(req,res)=>{
+    let id=req.query.id;
+    model.DeleteTable(id, (err, result) => {
+        if (err) {
+            console.error("Error deleting table:", err);
+            return res.status(500).send("Failed to delete table");
+        }
+        model.ViewTables((err1, result1) => {
+            if (err1) {
+                return res.status(500).send("Failed to fetch updated tables");
+            }
+            res.render("ViewTables.ejs", { data: result1 });
+        });
+    });
+
+}

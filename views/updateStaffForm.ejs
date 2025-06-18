@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Staff</title>
+</head>
+<body>
+    <h2>Update Staff Info</h2>
+    <form action="/UpdateStaff" method="POST">
+        <input type="hidden" name="id" value="<%= staff.staff_id %>" />
+        <label>Name:</label>
+        <input type="text" name="name" value="<%= staff.name %>" required><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="<%= staff.email %>" required><br>
+
+        <label>Contact:</label>
+        <input type="text" name="contact_no" value="<%= staff.contact_no %>" required><br>
+
+        <label>Salary:</label>
+        <input type="number" step="0.01" name="salary" value="<%= staff.salary %>" required><br>
+
+        <label>Password:</label>
+        <input type="text" name="password" value="<%= staff.password %>" required><br>
+
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
