@@ -1,28 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/staff.css">
+  <meta charset="UTF-8" />
+  <title>Add Staff</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0e6ad7e.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #e3f2fd, #f0f4f8);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border-radius: 24px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 720px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      color: #0077b6;
+      font-weight: 700;
+      margin-bottom: 35px;
+    }
+
+    .form-floating input {
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 16px;
+    }
+
+    .form-floating label {
+      font-style: italic;
+      color: #6c757d;
+    }
+
+    .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    .btn-submit {
+      background-color: #0077b6;
+      color: white;
+      padding: 14px;
+      font-size: 17px;
+      border-radius: 35px;
+      width: 100%;
+      border: none;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #005f8e;
+      box-shadow: 0 6px 14px rgba(0, 119, 182, 0.25);
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      color: green;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 35px 25px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <form action="/AddStaff" method="post">
-    <div>
-      
-        <h1>Add Staff</h1>
+  <form action="/AddStaff" method="POST">
+    <div class="form-container">
+      <h1><i class="fas fa-user-plus me-2"></i>Add New Staff</h1>
 
-        <input type="text" placeholder="Enter Staff Name" name="name" id="staffName">
-        <br>
-        <input type="text" placeholder="Enter Staff Email" name="email" id="staffEmail"><br>
-        <input type="text" placeholder="Enter Staff Phone" name="contact_no" id="staffcontact"><br>
-        <input type="text" placeholder="enter the salary of staff" name="salary" id="staffSalary"><br>
-        <input type="password" placeholder="Enter Staff Password" name="password" id="staffPassword"><br>
-        <button id="addStaffBtn">Add Staff</button>
-<br>
-<p><%=msg%></p>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="staffName" name="name" placeholder="Staff Name" required>
+        <label for="staffName">Enter Staff Name</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="staffEmail" name="email" placeholder="Email" required>
+        <label for="staffEmail">Enter Staff Email</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="staffcontact" name="contact_no" placeholder="Phone" required>
+        <label for="staffcontact">Enter Staff Phone</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="staffSalary" name="salary" placeholder="Salary" required>
+        <label for="staffSalary">Enter Staff Salary</label>
+      </div>
+
+      <div class="form-floating mb-4">
+        <input type="password" class="form-control" id="staffPassword" name="password" placeholder="Password" required>
+        <label for="staffPassword">Enter Password</label>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-plus-circle me-2"></i>Add Staff
+      </button>
+
+      <% if (msg) { %>
+        <p class="message"><%= msg %></p>
+      <% } %>
     </div>
-    </form>
+  </form>
 </body>
 </html>

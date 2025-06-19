@@ -206,6 +206,23 @@ exports.SearchAjax = (req, res) => {
     });
 };
 
+
+exports.SearchMenu = (req, res) => {
+    const name = req.query.name;
+
+    model.searchMenuByName(name, (err, result) => {
+        if (err) {
+            console.error("Error in searchMenu:", err);
+            return res.status(500).send("Internal server error");
+        }
+
+        res.json(result); // Send the menu data as JSON
+    });
+};
+
+
+
+
 exports.SearchStaff = (req, res) => {
     const sname = req.query.sname || "";
 
@@ -225,31 +242,87 @@ exports.section=(req, res) => {
 }
 
 
-exports.UpdateMenu = (req, res) => {
-    const { id } = req.query;
 
-    model.getMenuItemById(id, (err1, menuResult) => {
-        if (err1) {
-            return res.status(500).send("Error fetching menu item");
+// Show Update Form
+// controller/cont.js
+
+
+
+// Show Update Form
+exports.showUpdateForm = (req, res) => {
+  const id = req.query.id;
+
+  model.getMenuItemById(id, (err, result) => {
+    if (err) {
+      console.error("Error fetching menu item:", err);
+      return res.status(500).send("Server error");
+    }
+
+    if (result.length === 0) {
+      return res.status(404).send("Menu item not found");
+    }
+
+    const record = result[0];
+
+    model.getAllCategories((err2, categories) => {
+      if (err2) {
+        console.error("Error fetching categories:", err2);
+        return res.status(500).send("Server error");
+      }
+
+      res.render("UpdateMenu", { record, categories });
+    });
+  });
+};
+
+// Handle Update POST
+exports.updateMenu = (req, res) => {
+    const { id, name, category, description, price } = req.body;
+    const image = req.file ? req.file.filename : null;
+
+    // Validate inputs
+    if (!id || !name || !category || !description || !price) {
+        return res.status(400).send("All fields are required.");
+    }
+    console.log(req.body);
+
+    // Forward to model
+    model.updateMenu({ id, name, category, description, price, image }, (err, result) => {
+        if (err) {
+            console.error("Update error:", err);
+            return res.status(500).send("Failed to update menu");
         }
 
-        if (!menuResult || menuResult.length === 0) {
-            return res.status(404).send("Menu item not found");
-        }
-
-        model.getAllCategories((err2, categoryResult) => {
-            if (err2) {
-                return res.status(500).send("Error fetching categories");
-            }
-
-            res.render("UpdateMenu.ejs", {
-                record: menuResult[0],         // ✅ Now defined correctly
-                categories: categoryResult,
-                msg: ""
-            });
-        });
+        res.redirect("/ViewMenu");
     });
 };
+
+
+// exports.UpdateMenu = (req, res) => {
+//     const { id } = req.query;
+
+//     model.getMenuItemById(id, (err1, menuResult) => {
+//         if (err1) {
+//             return res.status(500).send("Error fetching menu item");
+//         }
+
+//         if (!menuResult || menuResult.length === 0) {
+//             return res.status(404).send("Menu item not found");
+//         }
+
+//         model.getAllCategories((err2, categoryResult) => {
+//             if (err2) {
+//                 return res.status(500).send("Error fetching categories");
+//             }
+
+//             res.render("UpdateMenu.ejs", {
+//                 record: menuResult[0],         // ✅ Now defined correctly
+//                 categories: categoryResult,
+//                 msg: ""
+//             });
+//         });
+//     });
+// };
 
 exports. DeleteMenu = (req, res) => {
     const { id } = req.query;
@@ -455,11 +528,5 @@ exports.DeleteTable=(req,res)=>{
     });
 
 }
-
-
-
-
-
-
 
 

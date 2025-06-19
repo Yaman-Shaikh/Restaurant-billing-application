@@ -21,6 +21,23 @@ exports.log = (username, password) => {
     });
 };
 
+
+
+exports.searchMenuByName = (name, callback) => {
+    const sql = `
+        SELECT menu.*, category.name AS category_name
+    FROM menu 
+    JOIN category ON menu.category_id = category.id 
+    WHERE item_name LIKE ?
+    `;
+
+    conn.query(sql, [`%${name}%`], (err, result) => {
+        if (err) return callback(err, null);
+        callback(null, result);
+    });
+};
+
+
 exports.addcatagory=(categoryName)=>{
     let flag=true;
     conn.query("insert into category values(0,?)",[categoryName],(err,result)=>{
@@ -183,14 +200,36 @@ exports.DeleteMenu = (id, callback) => {
 };
 
 
+exports.updateMenu = (data, callback) => {
+    const { id, name, category, description, price, image } = data;
+    let sql, params;
 
-exports.updateMenu = (id, name, price, category_id, description, image, callback) => {
-    const sql = "UPDATE menu SET item_name = ?, price = ?, category_id = ?, description = ?, image = ? WHERE id = ?";
-    conn.query(sql, [name, price, category_id, description, image, id], (err, result) => {
-        if (err) return callback(err, null);
+    if (image) {
+        sql = "UPDATE menu SET item_name=?, category_id=?, description=?, price=?, image=? WHERE id=?";
+        params = [name, category, description, price, image, id];
+    } else {
+        sql = "UPDATE menu SET item_name=?, category_id=?, description=?, price=? WHERE id=?";
+        params = [name, category, description, price, id];
+    }
+
+    conn.query(sql, params, (err, result) => {
+        if (err) {
+            console.error("Error in updateMenu:", err);
+            return callback(err);
+        }
         return callback(null, result);
     });
 };
+
+
+
+// exports.updateMenu = (id, name, price, category_id, description, image, callback) => {
+//     const sql = "UPDATE menu SET item_name = ?, price = ?, category_id = ?, description = ?, image = ? WHERE id = ?";
+//     conn.query(sql, [name, price, category_id, description, image, id], (err, result) => {
+//         if (err) return callback(err, null);
+//         return callback(null, result);
+//     });
+// };
 
 exports.AddStaff = (name, email, contact_no, salary, password) => {
     return new Promise((resolve, reject) => {

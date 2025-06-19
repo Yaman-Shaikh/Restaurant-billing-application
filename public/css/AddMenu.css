@@ -1,35 +1,67 @@
 /* addmenu.css */
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(120deg, #f6fafd, #e0f7fa);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, #e0f7fa, #fce4ec);
     min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+    animation: gradientFade 10s ease infinite alternate;
+}
+
+@keyframes gradientFade {
+    0% { background: radial-gradient(circle at top left, #e0f7fa, #fce4ec); }
+    100% { background: radial-gradient(circle at bottom right, #ffe0f0, #d0f9ff); }
 }
 
 form {
-    background-color: white;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 40px 45px;
+    width: 450px;
+    animation: fadeIn 0.8s ease-in-out;
+    position: relative;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+form::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    z-index: -1;
+    border-radius: 22px;
+    background: linear-gradient(120deg, #00acc1, #ff4081);
+    filter: blur(12px);
+    opacity: 0.5;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 24px;
-    color: #333;
+    margin-bottom: 30px;
+    color: #004d40;
+    font-size: 26px;
+    letter-spacing: 1px;
 }
 
 label {
     display: block;
-    margin: 12px 0 6px;
-    font-weight: bold;
-    color: #444;
+    margin: 14px 0 6px;
+    font-weight: 500;
+    color: #333;
 }
 
 input[type="text"],
@@ -37,43 +69,45 @@ input[type="number"],
 textarea,
 select {
     width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 10px;
+    padding: 14px;
+    margin-bottom: 18px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    outline: none;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #00bcd4;
-    outline: none;
+    border-color: #26c6da;
+    box-shadow: 0 0 8px rgba(38, 198, 218, 0.4);
 }
 
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    background-color: #00bcd4;
+    background: linear-gradient(to right, #26c6da, #ff4081);
     color: white;
-    font-weight: bold;
     font-size: 16px;
-    border-radius: 8px;
+    font-weight: 600;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-    background-color: #0097a7;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 172, 193, 0.4);
 }
 
 p {
-    margin-top: 16px;
     text-align: center;
-    color: green;
+    color: #2e7d32;
+    margin-top: 20px;
     font-weight: bold;
+    font-size: 14px;
 }

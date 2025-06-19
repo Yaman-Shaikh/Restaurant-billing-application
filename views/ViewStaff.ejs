@@ -1,68 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Staff</title>
-    <link rel="stylesheet" href="/css/ViewStaff.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Staff</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #fce4ec, #e0f7fa);
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      color: #00695c;
+      margin-bottom: 30px;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    #searchInput {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: 0.3s;
+    }
+
+    #searchInput:focus {
+      outline: none;
+      border-color: #00bcd4;
+      box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.2);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    thead {
+      background: #00bcd4;
+      color: white;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    tbody tr:hover {
+      background-color: #e0f7fa;
+      transition: 0.3s;
+    }
+
+    i.fa-pen-to-square {
+      color: #00796b;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    i.fa-pen-to-square:hover {
+      color: #004d40;
+    }
+
+    i.fa-trash {
+      color: #e53935;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    i.fa-trash:hover {
+      color: #b71c1c;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 20px;
+      color: #757575;
+    }
+
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 12px;
+        padding: 10px;
+      }
+
+      #searchInput {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
 
+  <div class="container">
     <!-- Search -->
     <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search staff..." onkeyup="searchstaff(this.value)">
+      <input type="text" id="searchInput" placeholder="Search staff..." onkeyup="searchstaff(this.value)" />
     </div>
 
     <!-- Header -->
-    <h1>View Staff</h1>
+    <h1>👨‍🍳 View Staff</h1>
 
     <!-- Table -->
     <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Sr. No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                    <th>Salary</th>
-                    <th>Password</th>
-                    
-                    <th>Update</th>
-                    <th>delete</th>
-                </tr>
-            </thead>
-            <tbody id="tbody">
-                <% if (data.length === 0) { %>
-                    <tr>
-                        <td colspan="6" class="no-data">No staff available. Please add one.</td>
-                    </tr>
-                <% } else { %>
-                    <% data.forEach((item, index) => { %>
-                        <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= item.name %></td>
-                            <td><%= item.email %></td>
-                            <td><%= item.contact_no %></td>
-                            <td><%= item.salary %></td>
-                            <td><%= item.password %></td>
-                            <td><a href="/updatestaff?id=<%= item.staff_id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
-                             <td><a href="/Deletestaff?id=<%=item.staff_id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
-                        </tr>
-                    <% }); %>
-                <% } %>
-            </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Sr. No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Salary</th>
+            <th>Password</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <% if (data.length === 0) { %>
+            <tr>
+              <td colspan="8" class="no-data">No staff available. Please add one.</td>
+            </tr>
+          <% } else { %>
+            <% data.forEach((item, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= item.name %></td>
+                <td><%= item.email %></td>
+                <td><%= item.contact_no %></td>
+                <td>₹<%= item.salary %></td>
+                <td><%= item.password %></td>
+                <td>
+                  <a href="/updatestaff?id=<%= item.staff_id %>">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="/Deletestaff?id=<%= item.staff_id %>">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            <% }); %>
+          <% } %>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-</div>
-
- <script type='text/javascript' src="/searchstaff.js"></script>
-
-
+  <script src="/searchstaff.js"></script>
 </body>
 </html>

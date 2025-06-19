@@ -41,14 +41,17 @@ router.get("/addmenu", upload.single('image'), reg.addmenu);
 router.post("/AddMenu", upload.single('image'), reg.AddMenu);
 
 router.get("/ViewMenu",reg.ViewMenu);
+// router.get("/UpdateMenu",reg.UpdateMenu);
+// router.post("/updateMenu", upload.single('image'), reg.updateMenu);
+
+router.get('/UpdateMenu', reg.showUpdateForm);
+router.post('/updatemenu', upload.single("image"), reg.updateMenu);
 
 
 
+router.get("/SearchMenu", reg.SearchMenu);
 
-router.get("/UpdateMenu",reg.UpdateMenu);
-router.post("/updateMenu", upload.single('image'), reg.updateMenu);
-
-router.get("/DeleteMenu",reg.DeleteMenu);
+ router.get("/DeleteMenu",reg.DeleteMenu);
 
 
 router.get("/Staff",reg.Staff);
@@ -71,4 +74,8 @@ router.get("/ViewTables",reg.ViewTables);
 router.get("/UpdateTable",reg.UpdateTable);
 router.post("/updatetable", reg.updatetable);
 router.get("/DeleteTable", reg.DeleteTable);
+
+
+
+
 module.exports=router;
