@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/staffmenu.css">
 
-<a href="/dashboard/tables" class="btn-back">🔙 Back to View Dining Tables</a>
+<a href="/dashboard/staffdashboard" class="btn-back">🔙 Back to View Dining Tables</a>
 
 <div class="menu-container">
   <div class="menu-left">
@@ -9,18 +9,15 @@
     <h2 class="menu-title">Our <span class="highlight">Menu</span></h2>
     <p class="subtitle">Delicious meals prepared fresh for you</p>
 
-   
-
     <div class="menu-grid">
       <% menus.forEach(menu => { %>
         <div class="menu-card">
-          <img src="/uploads/<%= menu.image %>" alt="<%= menu.item_name %>">
+          <img src="/uploads/<%= menu.image %>">
           <h4><%= menu.item_name %></h4>
           <p><%= menu.description %></p>
           <div class="price">₹<%= menu.price %></div>
-          <br>  
-          <!-- Use link instead of inline -->
-          <a href="/menus/add?table_id=<%= tableId %>&menu_id=<%= menu.id %>" class="btn-add">Add to Order</a>
+          <br>
+          <button class="btn-add" onclick="selectItem('<%= menu.item_name %>', <%= menu.price %>)">Add to Order</button>
         </div>
       <% }); %>
     </div>
@@ -31,13 +28,30 @@
     <p><strong>Table ID:</strong> <%= tableId %></p>
     <p><strong>Date:</strong> <%= currentDate %></p>
     <hr>
-   <h4>Order Items</h4>
-<div class="order-items">
-  <!-- New items will be inserted here -->
-</div>
-
+    <h4>Order Items</h4>
+    <div class="order-items">
+      <!-- Item rows will be added here -->
+      <div id="orderForm" style="display: none; margin-top: 15px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+        <h3 id="itemName"></h3>
+        <p>Price: <span id="itemPrice"></span></p>
+        <div style="margin-bottom: 10px;">
+          <button onclick="adjustQty(-1)">-</button>
+          <input type="number" id="qty" value="1" min="1" style="width:40px;" readonly>
+          <button onclick="adjustQty(1)">+</button>
+        </div>
+        <p>Total: ₹<span id="total"></span></p>
+        <button class="btn-confirm" type="button" style="background-color: green; color: white;">Confirm</button>
+        <button type="button" onclick="document.getElementById('orderForm').style.display='none'">Cancel</button>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- Hidden Inputs -->
+<input type="hidden" id="table_id" value="<%= tableId %>">
+<input type="hidden" id="staff_id" value="1">
+<input type="hidden" id="ord_date" value="<%= currentDate %>">
+
 <script>
   let selectedPrice = 0;
   let selectedItem = "";
@@ -61,12 +75,10 @@
     document.getElementById('total').innerText = qty * selectedPrice;
   }
 
-  // ✅ Add item to order list when confirmed
   document.querySelector('.btn-confirm').addEventListener('click', function () {
     const qty = parseInt(document.getElementById('qty').value);
     const total = qty * selectedPrice;
 
-    // Save in array (optional for future use)
     orderItems.push({
       name: selectedItem,
       price: selectedPrice,
@@ -74,7 +86,7 @@
       total: total
     });
 
-    // Add to UI
+    // Update UI
     const orderSection = document.querySelector('.menu-right .order-items');
     const itemHTML = `
       <div class="order-item">
@@ -83,7 +95,42 @@
     `;
     orderSection.insertAdjacentHTML('beforeend', itemHTML);
 
-    // Reset form
+    // Hide form
     document.getElementById('orderForm').style.display = 'none';
+
+    // Debug log
+    console.log("Sending order:", {
+      tableId: Number("<%= tableId %>"),
+      staffId:1,
+      date: new Date().toISOString().split("T")[0],
+      items: orderItems
+    });
+
+    // Save order to server
+   fetch('/dashboard/save-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableId: Number("<%= tableId %>"),
+        staffId: 1,
+        date: new Date().toISOString().split("T")[0],
+        items: orderItems
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message === 'Order stored') {
+        alert("Order added successfully.");
+        window.location.href = '/dashboard/tables';
+      } else {
+        alert("Something went wrong while saving the order.");
+      }
+    })
+    .catch(error => {
+      console.error("Save order fetch error:", error);
+      alert("Something went wrong while saving the order.");
+    });
   });
 </script>
