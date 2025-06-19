@@ -1,119 +1,84 @@
-/* ======= General ======= */
-body {
+/* Reset margin and padding */
+body, html {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f4f4;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ======= Admin Dashboard ======= */
+/* Sidebar */
 .sidebar {
-  width: 240px;
-  height: 100vh;
-  background-color: #fff;
   position: fixed;
-  padding: 20px 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #1a1a2e;
+  color: #fff;
+  padding: 20px 15px;
+  overflow-y: auto;
 }
 
 .sidebar h4 {
-  text-align: center;
-  color: #dc3545;
+  color: #f9d342;
   margin-bottom: 30px;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  color: #333;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.nav-link i {
-  margin-right: 10px;
   font-size: 1.2rem;
+  text-align: center;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  background-color: #ffe5e5;
-  color: #dc3545;
+.sidebar .nav-link {
+  color: #ccc;
+  display: block;
+  padding: 10px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
 }
 
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: #f9d342;
+  color: #000;
+}
+
+/* Submenu */
 .submenu {
   display: none;
-  flex-direction: column;
-  padding-left: 40px;
+  padding-left: 20px;
 }
 
 .submenu .nav-link {
-  font-weight: 400;
-  padding: 6px 0;
-  color: #666;
+  padding: 8px 10px;
+  font-size: 0.9rem;
 }
 
+/* Show submenu on toggle */
 .submenu.show {
-  display: flex;
+  display: block;
 }
 
-.main-content {
-  margin-left: 240px;
+/* Main content area */
+.content {
+  margin-left: 260px;
   padding: 30px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
-/* ======= Add Category Page ======= */
-.form-container {
-  max-width: 500px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-}
-
-.btn-orange {
-  background-color: #ff5200;
-  color: #fff;
-}
-
-.btn-orange:hover {
-  background-color: #e04b00;
-}
-
-/* ======= View Category Page ======= */
-.category-container {
-  margin-top: 50px;
-}
-
-.category-container h2 {
+/* Logout link style */
+.sidebar a.text-danger {
   font-weight: bold;
-  color: #dc3545;
 }
 
-#searchInput {
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  padding: 8px;
-}
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
 
-.table th,
-.table td {
-  vertical-align: middle !important;
-  text-align: center;
-}
-
-.table-hover tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-.fa-pen-to-square {
-  color: #007bff;
-  font-size: 1.2rem;
-}
-
-.fa-trash {
-  font-size: 1.2rem;
+  .content {
+    margin-left: 0;
+  }
 }

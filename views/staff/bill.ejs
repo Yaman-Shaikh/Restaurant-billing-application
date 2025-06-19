@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bill - Order <%= order.order_id %></title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfdfd;
+      padding: 40px;
+      color: #2c3e50;
+    }
+
+    .bill-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #34495e;
+    }
+
+    .info p {
+      margin: 8px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f9f9f9;
+      text-align: left;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 16px;
+      padding-top: 10px;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="bill-container">
+    <h2>Bill for Order <%= order.order_id %></h2>
+
+    <div class="info">
+      <p><strong>Table:</strong> <%= order.table_id %></p>
+      <p><strong>Staff:</strong> <%= order.staff_name %></p>
+      <p><strong>Date:</strong> <%= new Date(order.ord_date).toLocaleDateString() %></p>
+      <p><strong>Status:</strong> <%= order.ord_status %></p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price (₹)</th>
+          <th>Total (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let grandTotal = 0; %>
+        <% items.forEach(item => { 
+             let total = item.quantity * item.item_price;
+             grandTotal += total;
+        %>
+          <tr>
+            <td><%= item.item_name %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.item_price %></td>
+            <td><%= total %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <p class="total">Grand Total: ₹<%= grandTotal %></p>
+
+    <a href="/staff/orders" class="back-btn">← Back to Orders</a>
+  </div>
+</body>
+</html>
