@@ -91,10 +91,11 @@
         hasOrders = true;
   %>
       <div class="order-card">
+
         <h3>Order ID: <%= order.order_id %></h3>
         <% if (order.table_no) { %><p><strong>Table:</strong> <%= order.table_no %></p><% } %>
       <% let status = order.status && order.status.trim() !== '' ? order.status.trim() : 'Pending'; %>
-<p><strong>Status:</strong> 
+<!-- <p><strong>Status:</strong> 
   <span style="
     display: inline-block;
     padding: 4px 10px;
@@ -105,7 +106,7 @@
     color: white;">
     <%= status %>
   </span>
-</p>
+</p> -->
 
 
         <h4>Items:</h4>
@@ -122,7 +123,7 @@
 <a class="view-bill-btn" href="/dashboard/orders/<%= order.order_id %>/bill/pdf" style="margin-left: 10px;">Download PDF</a>
 
 
-</div>
+</div> 
   <% 
       }
     }); 
