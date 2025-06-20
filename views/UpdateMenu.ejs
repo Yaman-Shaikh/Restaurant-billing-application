@@ -14,24 +14,26 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+      background: #0f0f0f; /* Black background */
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-attachment: fixed;
+      padding: 20px;
     }
 
     .form-wrapper {
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 20px;
       padding: 40px;
       max-width: 600px;
       width: 100%;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       animation: fadeIn 0.8s ease;
+      color: #fff;
     }
 
     @keyframes fadeIn {
@@ -41,7 +43,7 @@
 
     h1 {
       text-align: center;
-      color: #004d40;
+      color: #ffd700; /* Yellow */
       font-weight: 600;
       margin-bottom: 30px;
     }
@@ -49,7 +51,7 @@
     label {
       font-weight: 500;
       margin-bottom: 6px;
-      color: #333;
+      color: #ddd;
     }
 
     .form-control,
@@ -57,23 +59,23 @@
       border-radius: 12px;
       padding: 12px;
       font-size: 14px;
-      background-color: rgba(255, 255, 255, 0.95);
-      border: 1px solid #ccc;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid #444;
       transition: all 0.3s ease;
     }
 
     .form-control:focus,
     .form-select:focus {
-      border-color: #26c6da;
-      box-shadow: 0 0 0 4px rgba(38, 198, 218, 0.2);
-      background-color: #fff;
-      outline: none;
+      border-color: #bb86fc;
+      box-shadow: 0 0 0 4px rgba(187, 134, 252, 0.2);
+      background-color: rgba(255, 255, 255, 0.15);
     }
 
     button[type="submit"] {
-      background: linear-gradient(to right, #26c6da, #ff4081);
+      background: linear-gradient(to right, #ffd700, #9c27b0); /* Yellow to Purple */
       border: none;
-      color: white;
+      color: #000;
       font-weight: 600;
       padding: 14px;
       font-size: 16px;
@@ -84,10 +86,20 @@
     }
 
     button[type="submit"]:hover {
-      background: linear-gradient(to right, #00acc1, #e91e63);
+      background: linear-gradient(to right, #fdd835, #7b1fa2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 172, 193, 0.4);
+      box-shadow: 0 8px 20px rgba(187, 134, 252, 0.4);
+      color: #fff;
     }
+    input[type="file"] {
+  background-color: #c0c0c0; /* Silver */
+  color: #000;               /* Black text for contrast */
+  border-radius: 10px;       /* Rounded corners */
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+}
+
   </style>
 </head>
 
@@ -107,7 +119,7 @@
       <div class="mb-3">
         <label for="category" class="form-label">Category</label>
         <select class="form-select" id="category" name="category" required>
-          <option value="" disabled <%= !record.category_id ? 'selected' : '' %>>Select Category</option>
+          <option value="">Select Category</option>
           <% categories.forEach(category => { %>
             <option value="<%= category.id %>" <%= category.id == record.category_id ? 'selected' : '' %>>
               <%= category.name %>

@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Menu</title>
-    <link rel="stylesheet" href="/css/AddMenu.css"> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Menu</title>
+  <link rel="stylesheet" href="/css/AddMenu.css">
 </head>
 <body>
- 
-    <div class="container">
-        <h1>Add Menu</h1>
+  <div class="container">
+    <h1>Add Menu</h1>
 
-        <form action="/AddMenu" method="post" enctype="multipart/form-data">
-        <label>Menu Name:</label>
-        <input type="text" name="name" placeholder="Enter menu name" required>
+    <form action="/AddMenu" method="post" enctype="multipart/form-data">
+      <label>Menu Name:</label>
+      <input type="text" name="name" placeholder="Enter menu name" required>
 
-        <br><label>Select Category:</label>
-        <select name="category" required>
-            <% categories.forEach(category => { %>
-                <option value="<%= category.id %>"><%= category.name %></option>
-            <% }) %>
-        </select>
+      <label>Select Category:</label>
+      <select name="category" required>
+        <% categories.forEach(category => { %>
+          <option value="<%= category.id %>"><%= category.name %></option>
+        <% }) %>
+      </select>
 
-        <br>
-        <label>Menu Price:</label>
-        <input type="number" name="price" placeholder="Enter menu price" required>
+      <label>Menu Price:</label>
+      <input type="number" name="price" placeholder="Enter menu price" required>
 
-        <br>
-        <label>Menu Description:</label>
-     <textarea name="description" placeholder="Enter menu description" required></textarea>
-        <br>
-        <label>Upload Menu Image:</label>
-        <input type="file" name="image" accept="image/*" required>
+      <label>Menu Description:</label>
+      <textarea name="description" placeholder="Enter menu description" required></textarea>
 
-        <br><br>
-        <button type="submit">Add Menu</button>
+      <label>Upload Menu Image:</label>
+      <input type="file" name="image" accept="image/*" required>
 
-        <% if (typeof msg !== 'undefined') { %>
-            <p><%= msg %></p>
-        <% } %>
+      <br><br>
+      <button type="submit">Add Menu</button>
+
+      <% if (typeof msg !== 'undefined') { %>
+        <p><%= msg %></p>
+      <% } %>
     </form>
-
-    </div>
-    
+  </div>
 </body>
 </html>

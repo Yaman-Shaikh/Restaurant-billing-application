@@ -3,24 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <title>Add Category</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="/style.css"> -->
-  
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 10px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #2c3e50, #000000);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .form-container {
+      max-width: 480px;
+      margin: 80px auto;
+      background: rgba(20, 20, 20, 0.85);
+      border-radius: 20px;
+      padding: 35px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+
+      /* ✨ Animation */
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h4 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #f8f9fa;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #ffc107;
+    }
+
+    .form-control {
+      background: rgba(40, 40, 40, 0.95);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-control:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.25);
+    }
+
+    .btn-orange {
+      background-color: #ff7b00;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .btn-orange:hover {
+      background-color: #e66a00;
+    }
+
+    p {
+      margin-top: 15px;
+      color: #ffcccc;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <div class="form-container">
-      <h4 class="text-center mb-4"><strong>Add Category</strong></h4>
+      <h4>Add Category</h4>
       <form action="/addcatagory" method="POST">
         <div class="mb-3">
           <label for="categoryName" class="form-label">Category Name:</label>
           <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Enter Category Name" required>
         </div>
-        <button type="submit" class="btn btn-orange  w-100">Add Category</button>
-        <p><%=msg%></p>
-      </form
-      
-      >
+        <button type="submit" class="btn btn-orange w-100">Add Category</button>
+        <% if (msg) { %>
+          <p><%= msg %></p>
+        <% } %>
+      </form>
     </div>
   </div>
 </body>

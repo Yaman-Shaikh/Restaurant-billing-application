@@ -1,62 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Staff</title>
-    <link rel="stylesheet" href="/css/ViewStaff.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+  <meta charset="UTF-8" />
+  <title>View Tables</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: #fff;
+      padding: 40px 20px;
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(14px);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.06),
+                  0 0 40px rgba(170, 140, 255, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      font-weight: 700;
+      color: black;
+      
+    }
+
+    .search-bar {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    #searchInput {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: none;
+      background-color: #2e2b4f;
+      color: #fff;
+      font-size: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    thead {
+      background: black;
+      color: white;
+    }
+
+    thead th {
+      padding: 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: black;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .fa-pen-to-square {
+      color: #ffc107;
+      transition: transform 0.2s;
+    }
+
+    .fa-pen-to-square:hover {
+      transform: scale(1.2);
+      color: #ffca28;
+    }
+
+    .fa-trash {
+      color: #ff4d4d;
+      transition: transform 0.2s;
+    }
+
+    .fa-trash:hover {
+      transform: scale(1.2);
+      color: #ff1744;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      thead th, tbody td {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      #searchInput {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
+
 <div class="container">
 
-    <!-- Search -->
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search staff..." onkeyup="searchstaff(this.value)">
-    </div>
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search table..." onkeyup="searchstaff(this.value)">
+  </div>
 
-    <!-- Header -->
-    <h1>View Tables</h1>
+  <!-- Header -->
+  <h1><i class="fas fa-chair me-2"></i>View Tables</h1>
 
-    <!-- Table -->
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Capacity</th>
-                    <th>Availability Status</th>
-                    
-                    <th>Update</th>
-                    <th>delete</th>
-                </tr>
-            </thead>
-            <tbody id="tbody">
-                <% if (data.length === 0) { %>
-                    <tr>
-                        <td colspan="6" class="no-data">no table is there .</td>
-                    </tr>
-                <% } else { %>
-                    <% data.forEach((item, index) => { %>
-                        <tr>
-                            <td><%= item.table_id %></td>
-                            <td><%= item.capacity %></td>
-                            <td><%= item.availability_status %></td>
-                            <td><a href="/UpdateTable?id=<%= item.table_id %>"><i class="fa-regular fa-pen-to-square"></i></a></td>
-                             <td><a href="/DeleteTable?id=<%=item.table_id %>"><i class="fa-solid fa-trash text-danger"></i></a></td>
-                        </tr>
-                    <% }); %>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
-
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Capacity</th>
+          <th>Availability</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <% if (data.length === 0) { %>
+          <tr>
+            <td colspan="5" class="no-data">No table available.</td>
+          </tr>
+        <% } else { %>
+          <% data.forEach((item, index) => { %>
+            <tr>
+              <td><%= item.table_id %></td>
+              <td><%= item.capacity %></td>
+              <td><%= item.availability_status %></td>
+              <td>
+                <a href="/UpdateTable?id=<%= item.table_id %>">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+              </td>
+              <td>
+                <a href="/DeleteTable?id=<%= item.table_id %>">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
- <script type='text/javascript' src="/searchstaff.js"></script>
-
-
+<script src="/searchstaff.js"></script>
 </body>
 </html>
