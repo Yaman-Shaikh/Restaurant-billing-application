@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Invoice - <%= order.order_id %></title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f7f7;
+      padding: 40px 20px;
+      color: #2c2c2c;
+    }
+
+    .invoice-box {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 40px 45px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid #d4af37;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 34px;
+      color: #1d1d1d;
+    }
+
+    .header p {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    .info-grid p {
+      margin-bottom: 6px;
+    }
+
+    .label {
+      font-weight: 500;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .badge.pending { background-color: #ffc107; }
+    .badge.completed { background-color: #28a745; }
+    .badge.cancelled { background-color: #dc3545; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    thead {
+      background-color: #333;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border: 1px solid #e1e1e1;
+      text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    tfoot td {
+      font-weight: 600;
+      font-size: 16px;
+      background-color: #fafafa;
+    }
+
+    .footer {
+      margin-top: 35px;
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .invoice-box {
+        box-shadow: none;
+        border: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-box">
+    <div class="header">
+      <h1>Bill that makes your days </h1>
+      <p>Order Summary and Billing Details</p>
+    </div>
+
+    <div class="info-grid">
+      <div>
+        <p><span class="label">Order ID:</span> <%= order.order_id %></p>
+        <p><span class="label">Table No:</span> <%= order.table_id %></p>
+      </div>
+      <div>
+       
+        <p><span class="label">Date:</span> <%= order.ord_date %></p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Unit Price (₹)</th>
+          <th>Quantity</th>
+          <th>Total (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach(item => { %>
+          <tr>
+            <td><%= item.item_name %></td>
+            <td><%= item.item_price%></td>
+
+            <td><%= item.quantity %></td>
+            <td><%= item.total %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total Amount</td>
+          <td>₹<%= order.total_amt %></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="footer">
+      Urban Dine | +91 98765 43210 | GSTIN: 29ABCDE1234Z9<br>
+      © <%= new Date().getFullYear() %> Urban Dine. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

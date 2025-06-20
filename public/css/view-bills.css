@@ -1,0 +1,107 @@
+/* === Base Styling === */
+body {
+  background: linear-gradient(to right, #f1f2f6, #dfe4ea);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-weight: 700;
+  color: #2f3542;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  border-bottom: 3px solid #ffa502;
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+/* === Container & Card === */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card h6 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e272e;
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #57606f;
+  margin-bottom: 6px;
+}
+
+/* === Table Styling === */
+.table {
+  font-size: 14px;
+  margin-top: 10px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: #ffa502;
+  color: white;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* === Button === */
+.btn-warning {
+  background-color: #ffa502;
+  border: none;
+  color: white;
+  font-weight: 600;
+  margin-top: 15px;
+  border-radius: 10px;
+  padding: 10px 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  transform: scale(1.05);
+}
+
+/* === Responsive Cards === */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .card h6, .card p {
+    font-size: 14px;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .btn-warning {
+    width: 100%;
+  }
+}

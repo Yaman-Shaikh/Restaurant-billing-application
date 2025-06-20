@@ -20,6 +20,11 @@ app.get('/reports', (req, res) => res.render('staff/reports'));
 app.get("/staffdashboard", staffController.getStaffDashboard);
 app.post('/save-order', staffController.saveOrder);
 app.get('/orders', staffController.getAllOrders);
-app.get('/staff/orders/:id/bill', staffController.generateBill);
+
+app.get('/orders/:id/bill', staffController.viewBill);
+app.get('/orders/:id/bill/pdf', staffController.downloadBillPDF);
+
+
+app.get('/ViewBills', staffController.viewBills);
 
 module.exports = app;

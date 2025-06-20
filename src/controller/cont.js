@@ -235,6 +235,21 @@ exports.SearchStaff = (req, res) => {
     });
 };
 
+exports.SearchTable=(req,res)=>{
+const name=req.query.sname||"";
+    model.SearchTable(name,(err,result)=>{
+        if(err)
+        {
+            console.log(err);
+            
+        }
+        else{
+            res.json(result);
+        }
+
+    
+    });
+}
 exports.section=(req, res) => {
     
   const name = req.params.name;
