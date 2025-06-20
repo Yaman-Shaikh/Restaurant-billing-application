@@ -1,40 +1,59 @@
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/view-bills.css">
+<link rel="stylesheet" href="../css/view-bills.css">
 
-<div class="container mt-4">
-  <h3 class="text-center mb-4">Completed Orders</h3>
-
+<div  class="col-sm-6 col-md-4 col-lg-3 mb-4">
+  <h2 class="section-title">Pending Bills</h2>
   <div class="row">
     <% orders.forEach(order => { %>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm p-3">
-          <h6><strong>Order ID:</strong> <%= order.order_id %></h6>
-          <p><strong>Table ID:</strong> <%= order.table_id %></p>
-          <p><strong>Staff Name:</strong> <%= order.name %></p>
-          <p><strong>Order Date:</strong> <%= order.ord_date.toISOString().split('T')[0] %></p> 
-          <p><strong>Total Amount:</strong> ₹<%= order.total_amt %></p>
-          <table class="table table-sm mt-2">
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Rate (₹)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% order.items.forEach(item => { %>
-                <tr>
-                  <td><%= item.item_name %></td>
-                  <td><%= item.quantity %></td>
-                  <td><%= item.item_price %></td>
-                </tr>
-              <% }); %>
-            </tbody>
-          </table>
+      <% if (order.ord_status === 'Pending') { %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card bill-card">
+            <div class="card-header">
+              <span class="badge <%= order.ord_status.toLowerCase() %>">
+  <% if (order.ord_status === 'Pending') { %>🕓<% } %>
+  <% if (order.ord_status === 'Completed') { %>✅<% } %>
+  <% if (order.ord_status === 'Cancelled') { %>❌<% } %>
+  <%= order.ord_status %>
+</span>
 
-          <a href="/dashboard/orders/<%= order.order_id %>/bill/pdf" class="btn btn-warning">View Bill</a>
+
+            </div>
+
+            <div class="card-body">
+              <p><strong>Table:</strong> <%= order.table_id %></p>
+              <p><strong>Staff:</strong> <%= order.staff_name %></p>
+              <p><strong>Total:</strong> ₹<%= order.total_amt %></p>
+
+              <table class="table table-bordered table-sm bill-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>₹</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% order.items.forEach(item => { %>
+                    <tr>
+                      <td><%= item.item_name %></td>
+                      <td><%= item.quantity %></td>
+                      <td><%= item.item_price %></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+              <a href="/dashboard/orders/<%= order.order_id %>/bill/pdf" class="btn btn-outline-warning btn-sm">
+                🧾 View Bill
+              </a>
+              <form action="/dashboard/orders/<%= order.order_id %>/complete" method="POST">
+                <button type="submit" class="btn btn-success btn-sm">✅ Complete payment </button>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
+      <% } %>
     <% }); %>
   </div>
 </div>

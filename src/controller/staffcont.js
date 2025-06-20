@@ -338,14 +338,16 @@ const filePath = path.join(__dirname, '../../views/bill.ejs');
 
 exports.viewBills = async (req, res) => {
   try {
-    const [orders] = await db.promise().query(`
-      SELECT om.*, s.name 
+    const [orders] = await db.promise().query(
+      `
+    SELECT om.*, s.name AS staff_name
+
       FROM order_master om
       JOIN staff s ON om.staff_id = s.staff_id
-      
       ORDER BY om.order_id DESC
     `);
-console.log(orders);
+    console.log("deatch order ",orders);
+
     // For each order, fetch items
     for (let order of orders) {
       const [items] = await db.promise().query(
