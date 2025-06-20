@@ -146,8 +146,6 @@ exports.saveOrder = (req, res) => {
 };
 
 
-
-
 exports.getTables = (req, res) => {
   const query = 'SELECT * FROM tables';
 
@@ -207,6 +205,27 @@ exports.getAllOrders = (req, res) => {
 };
 
 
+exports.markOrderAsComplete = (req, res) => {
+  const orderId = req.params.id;
+
+  const updateQuery = `
+    UPDATE order_master
+    SET ord_status = 'Completed'
+    WHERE order_id = ?
+  `;
+
+  db.query(updateQuery, [orderId], (err, result) => {
+    if (err) {
+      console.error("Error updating order status:", err);
+      return res.status(500).send("Failed to complete payment");
+    }
+
+    res.status(200).send("Order marked as complete");
+  });
+};
+
+
+
 
 exports.getBillView = (req, res) => {
   const orderId = req.params.id;
@@ -250,8 +269,6 @@ exports.getBillView = (req, res) => {
     });
   });
 };
-
-
 
 const ejs = require('ejs');
 const path = require('path');
@@ -363,3 +380,5 @@ exports.viewBills = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+

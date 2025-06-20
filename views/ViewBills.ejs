@@ -48,7 +48,10 @@
                 🧾 View Bill
               </a>
               <form action="/dashboard/orders/<%= order.order_id %>/complete" method="POST">
-                <button type="submit" class="btn btn-success btn-sm">✅ Complete payment </button>
+               <button type="button" class="btn btn-success btn-sm complete-payment-btn" data-id="<%= order.order_id %>">
+  ✅ Complete Payment
+</button>
+
               </form>
             </div>
           </div>
@@ -57,3 +60,36 @@
     <% }); %>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".complete-payment-btn");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", function () {
+        const orderId = this.dataset.id;
+
+        // Custom confirmation dialog
+        const confirmed = confirm("Are you sure you want to complete the payment?");
+        
+        if (confirmed) {
+          // Send POST request using fetch
+          fetch(`/dashboard/orders/${orderId}/complete`, {
+            method: "POST"
+          })
+            .then(res => {
+              if (res.ok) {
+                alert("Payment marked as complete!");
+                location.reload(); // reload the page to show updated list
+              } else {
+                alert("Error completing payment.");
+              }
+            })
+            .catch(err => {
+              console.error(err);
+              alert("Error contacting server.");
+            });
+        }
+      });
+    });
+  });
+</script>
