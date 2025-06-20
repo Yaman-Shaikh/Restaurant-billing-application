@@ -3,140 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>User Login</title>
+  <title>User Login | Aapna Kitchen</title>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
   <style>
-    /* ======= Reset & Base ======= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body {
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e8edf2, #f5f7fa);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #333;
-    }
+  body {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffc107;
+  }
+.login-container {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  padding: 45px 35px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 30px rgba(255, 193, 7, 0.25);
+  backdrop-filter: blur(12px);
+  transition: all 0.4s ease-in-out;
+}
 
-    /* ======= Login Container ======= */
-    .login-container {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 40px 35px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-      text-align: center;
-      border: 1px solid #e1e5ec;
-      transition: all 0.3s ease;
-    }
+.login-container:hover {
+  box-shadow: 0 10px 40px rgba(255, 193, 7, 0.3);
+  transform: scale(1.01);
+}
 
-    .login-container:hover {
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    }
+.logo img {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 25px;
+  border: 3px solid #ffc107;
+  box-shadow: 0 4px 20px rgba(255, 193, 7, 0.4);
+}
 
-    /* ======= Logo ======= */
-    .logo img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      margin-bottom: 20px;
-    }
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffc107;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
 
-    /* ======= Heading ======= */
-    h2 {
-      font-size: 26px;
-      font-weight: 600;
-      color: #2c3e50;
-      margin-bottom: 25px;
-    }
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    /* ======= Form Inputs ======= */
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #1f1f1f;
+  padding: 14px 18px;
+  border-radius: 40px;
+  border: 1px solid #444;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 0 transparent;
+}
 
-    .input-group {
-      display: flex;
-      align-items: center;
-      background: #f7f9fb;
-      padding: 12px 15px;
-      border-radius: 30px;
-      border: 1px solid #dfe6ee;
-      transition: 0.3s ease;
-    }
+.input-group i {
+  color: #ffc107;
+  margin-right: 12px;
+  font-size: 16px;
+}
 
-    .input-group i {
-      color: #7f8c8d;
-      margin-right: 10px;
-    }
+.input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+  background: transparent;
+  color: #fff;
+}
 
-    .input-group input {
-      border: none;
-      outline: none;
-      flex: 1;
-      font-size: 15px;
-      background: transparent;
-      color: #2c3e50;
-    }
+.input-group:focus-within {
+  border-color: #ffc107;
+  box-shadow: inset 0 0 10px rgba(255, 193, 7, 0.3);
+}
 
-    .input-group:focus-within {
-      border-color: #4a90e2;
-    }
+.sign-in-button {
+  background-color: #ffc107;
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+  letter-spacing: 0.5px;
+}
 
-    /* ======= Button ======= */
-    .sign-in-button {
-      background-color: #4a90e2;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 30px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
+.sign-in-button:hover {
+  background-color: #e0a800;
+  box-shadow: 0 8px 30px rgba(255, 193, 7, 0.6);
+  transform: scale(1.03);
+}
 
-    .sign-in-button:hover {
-      background-color: #3c7dc9;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    }
+p {
+  margin-top: 18px;
+  color: #ff4d4d;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
 
-    /* ======= Error/Message Text ======= */
-    p {
-      margin-top: 15px;
-      color: #e74c3c;
-      font-size: 14px;
-    }
+/* Responsive Design */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 25px;
+    margin: 10px;
+  }
 
-    /* ======= Responsive ======= */
-    @media (max-width: 480px) {
-      .login-container {
-        padding: 30px 25px;
-        margin: 10px;
-      }
+  h2 {
+    font-size: 24px;
+  }
 
-      h2 {
-        font-size: 22px;
-      }
+  .input-group input {
+    font-size: 14px;
+  }
+}
 
-      .input-group input {
-        font-size: 14px;
-      }
-    }
-  </style>
+
+</style>
+
 </head>
 <body>
   <div class="login-container">
