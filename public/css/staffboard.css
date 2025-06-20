@@ -1,141 +1,121 @@
-/* Elegant Staff Dashboard Styling */
+/* General Dashboard Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f6f8fa;
+  margin: 0;
+  padding: 0;
+}
 
 .dashboard-wrapper {
-  padding: 40px;
-  background: linear-gradient(to right, #f9fbfc, #eef1f5);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
+  padding: 20px;
 }
 
 .dashboard-header {
-  background: #ffffff;
-  padding: 25px 35px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.06);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard-header h4 {
   margin: 0;
-  font-weight: 600;
   color: #333;
+  font-size: 22px;
 }
 
 .btn-logout {
-  background: #e53935;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
   text-decoration: none;
-  transition: background 0.3s ease;
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .btn-logout:hover {
-  background: #c62828;
+  background-color: #c82333;
 }
 
+/* Card Container */
 .card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
 }
 
+/* Card Box */
 .card-box {
-  flex: 1 1 calc(25% - 30px);
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out;
 }
 
 .card-box:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-}
-
-.icon-box {
-  background: linear-gradient(135deg, #ff6f61, #d72638);
-  color: #fff;
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-box h6 {
-  color: #888;
-  font-size: 1rem;
-  margin: 8px 0;
-  font-weight: 500;
-}
-
-.card-box h5 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #2e2e2e;
-}
-
-.badges {
-  margin-top: 12px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin: 4px;
-  color: white;
-}
-
-.badge.available {
-  background-color: #26a69a;
-}
-
-.badge.occupied {
-  background-color: #5c6bc0;
-}
-
-.badge.completed {
-  background-color: #66bb6a;
-}
-
-.badge.pending {
-  background-color: #ffa726;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .card-box {
-    flex: 1 1 100%;
-  }
-}
-
-
-.icon-img {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  background-color: #f4f4f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: translateY(-5px);
 }
 
 .icon-img img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.card-box h6 {
+  margin: 0;
+  font-size: 15px;
+  color: #666;
+}
+
+.card-box h5 {
+  margin: 8px 0 0 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Badges */
+.badges {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 13px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  color: #fff;
+}
+
+.badge.available {
+  background-color: #28a745;
+}
+
+.badge.occupied {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge.completed {
+  background-color: #17a2b8;
+}
+
+.badge.pending {
+  background-color: #fd7e14;
+}
+
+/* Optional: Message for no data */
+.no-data {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 18px;
+  color: #888;
 }
