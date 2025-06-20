@@ -118,9 +118,11 @@
             </li>
           <% }); %>
         </ul>
+        <a class="view-bill-btn" href="/dashboard/orders/<%= order.order_id %>/bill">View Bill</a>
+<a class="view-bill-btn" href="/dashboard/orders/<%= order.order_id %>/bill/pdf" style="margin-left: 10px;">Download PDF</a>
 
-        <a class="view-bill-btn" href="/orders/<%= order.order_id %>/bill">View Bill</a>
-      </div>
+
+</div>
   <% 
       }
     }); 

@@ -87,74 +87,6 @@ exports.getStaffDashboard = (req, res) => {
   });
 }
 
-
-// At the top of staffController.js
-
-// exports.saveOrder = async (req, res) => {
-//   const { tableId, staffId, date, items } = req.body;
-
-//   try {
-//     const connection = await db.getConnection();
-
-//     // Insert each item as a separate order in order_master
-//     for (const item of items) {
-//       await connection.execute(
-//         `INSERT INTO order_master (table_id, staff_id, ord_date, total_amt, ord_status)
-//          VALUES (?, ?, ?, ?, ?)`,
-//         [tableId, staffId, date, item.total, 'Pending']
-//       );
-//     }
-
-//     connection.release();
-//     res.json({ message: 'Order stored' });
-//   } catch (error) {
-//     console.error('Error saving order:', error);
-//     res.status(500).json({ error: 'Failed to save order' });
-//   }
-// };
-
-
-
-// exports.saveOrder = async (req, res) => {
-//   const { tableId, staffId, date, items } = req.body;
-
-//   try {
-//     const connection = await db.getConnection();
-
-//     // Calculate grand total
-//     const grandTotal = items.reduce((sum, item) => sum + item.total, 0);
-
-//     // Insert into order_master (1 row)
-//     const [result] = await connection.execute(
-//       `INSERT INTO order_master (table_id, staff_id, ord_date, total_amt, ord_status)
-//        VALUES (?, ?, ?, ?, ?)`,
-//       [tableId, staffId, date, grandTotal, 'Pending']
-//     );
-
-//     const orderId = result.insertId;
-
-//     // Insert each item into order_items
-//     const insertPromises = items.map(item => {
-//       return connection.execute(
-//         `INSERT INTO order_items (order_id, item_name, item_price, quantity, total)
-//          VALUES (?, ?, ?, ?, ?)`,
-//         [orderId, item.name, item.price, item.quantity, item.total]
-//       );
-//     });
-
-//     await Promise.all(insertPromises);
-//     connection.release();
-
-//     res.json({ message: 'Order stored' });
-//   } catch (error) {
-//     console.error('Error saving order:', error);
-//     res.status(500).json({ error: 'Failed to save order' });
-//   }
-// };
-
-
-//--------------------
-// controllers/orderController.js
 exports.saveOrder = (req, res) => {
   console.log("Incoming order data:", req.body);
 
@@ -319,28 +251,113 @@ exports.getBillView = (req, res) => {
   });
 };
 
-exports.generateBill = async (req, res) => {
+
+
+const ejs = require('ejs');
+const path = require('path');
+const pdf = require('html-pdf');
+
+exports.viewBill = async (req, res) => {
+  const orderId = req.params.id;
+
   try {
-    const orderId = req.params.id;
+    // Get order details with table_id and ord_status
+    const [orderResults] = await db.promise().execute(`
+      SELECT om.order_id, om.table_id, om.total_amt, om.ord_status, om.ord_date 
+      FROM order_master om 
+      WHERE om.order_id = ?
+    `, [orderId]);
 
-    // Fetch order details
-    const [orderRows] = await db.query('SELECT * FROM orders WHERE order_id = ?', [orderId]);
-    const order = orderRows[0];
+    if (orderResults.length === 0) {
+      return res.status(404).send("Order not found");
+    }
 
-    // Fetch order items
-    const [items] = await db.query(`
-      SELECT oi.*, m.item_name, m.item_price 
-      FROM order_items oi
-      JOIN menu m ON oi.item_id = m.item_id
-      WHERE oi.order_id = ?`, [orderId]);
+    const order = orderResults[0];
 
-    res.render('bill', {
+    // Get items for that order
+    const [itemResults] = await db.promise().execute(`
+      SELECT item_name, item_price, quantity, total 
+      FROM order_items 
+      WHERE order_id = ?
+    `, [orderId]);
+
+    res.render("bill", {
       order,
-      items,
+      items: itemResults
     });
 
+  } catch (err) {
+    console.error("View Bill Error:", err);
+    res.status(500).send("Server error");
+  }
+};
+exports.downloadBillPDF = async (req, res) => {
+  const orderId = req.params.id;
+
+  try {
+    const [orderRows] = await db.promise().execute(
+      'SELECT * FROM order_master WHERE order_id = ?',
+      [orderId]
+    );
+
+    if (orderRows.length === 0) return res.status(404).send('Order not found');
+
+    const order = orderRows[0];
+
+    const [items] = await db.promise().execute(
+      'SELECT * FROM order_items WHERE order_id = ?',
+      [orderId]
+    );
+const filePath = path.join(__dirname, '../../views/bill.ejs');
+
+
+    ejs.renderFile(filePath, { order, items }, (err, html) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error generating bill');
+      }
+
+      const options = {
+        format: 'A4',
+        orientation: 'portrait',
+        border: '10mm'
+      };
+
+      pdf.create(html, options).toStream((err, stream) => {
+        if (err) return res.status(500).send('Error generating PDF');
+        res.setHeader('Content-disposition', `attachment; filename=bill-${orderId}.pdf`);
+        res.setHeader('Content-type', 'application/pdf');
+        stream.pipe(res);
+      });
+    });
   } catch (error) {
-    console.error('Error generating bill:', error);
-    res.status(500).send('Internal Server Error');
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+};
+
+exports.viewBills = async (req, res) => {
+  try {
+    const [orders] = await db.promise().query(`
+      SELECT om.*, s.name 
+      FROM order_master om
+      JOIN staff s ON om.staff_id = s.staff_id
+      
+      ORDER BY om.order_id DESC
+    `);
+console.log(orders);
+    // For each order, fetch items
+    for (let order of orders) {
+      const [items] = await db.promise().query(
+        'SELECT * FROM order_items WHERE order_id = ?',
+        [order.order_id]
+      );
+      order.items = items;
+    }
+
+    res.render('ViewBills', { orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
   }
 };

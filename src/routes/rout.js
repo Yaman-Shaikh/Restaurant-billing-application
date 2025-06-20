@@ -34,7 +34,7 @@ router.get("/Search",reg.Search);
 router.get("/SearchStaff",reg.SearchStaff);
 
 router.get("/SearchAjax",reg.SearchAjax);
-
+router.get("/Searchtable", reg.SearchTable);
 
 
 router.get("/addmenu", upload.single('image'), reg.addmenu);

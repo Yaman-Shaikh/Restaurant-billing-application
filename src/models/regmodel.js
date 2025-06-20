@@ -167,15 +167,27 @@ exports.SearchAjax = (sname, callback) => {
 }
 exports.SearchStaff = (sname, callback) => {
     const searchPattern = `%${sname}%`;
-    const sql = "SELECT * FROM staff WHERE name LIKE ?";
-    conn.query(sql, [searchPattern], (err, result) => {
+    const sql = "SELECT * FROM staff WHERE name LIKE ? or email LIKE ? or contact_no LIKE ? or salary LIKE ? or password LIKE ?";
+   conn.query(sql, [searchPattern, searchPattern, searchPattern, searchPattern, searchPattern], (err, result) => {
+        if (err) {
+            console.error("Search Staff Error:", err);
+            return callback(err, null);
+        }
+        console.log("Search Staff Result:", result);
+        callback(null, result);
+});
+};
+
+exports.SearchTable = (sname, callback) => {
+    const searchPattern = `%${sname}%`;
+    const sql = "SELECT * FROM dinning_table WHERE table_id LIKE ? or capacity LIKE ? or availability_status LIKE ?";
+    conn.query(sql, [searchPattern, searchPattern, searchPattern], (err, result) => {
         if (err) {
             return callback(err, null);
         }
         callback(null, result);
     });
 };
-
 
 
 exports.getAllCategories = (callback) => {
