@@ -1,87 +1,113 @@
+/* ---------------- GLOBAL STYLES ---------------- */
 body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f4f6f8;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f9;
   margin: 0;
-  padding: 30px;
+  padding: 0;
+  color: #212529;
 }
 
 .section-title {
-  font-size: 22px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
+  font-size: 1.75rem;
+  font-weight: 600;
   color: #2c3e50;
+  border-left: 4px solid #3498db;
+  padding-left: 10px;
+  margin-bottom: 1.5rem;
 }
 
-/* Card Box */
+/* ---------------- CARD STYLES ---------------- */
 .bill-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: transform 0.2s ease;
-  border-left: 4px solid #3498db;
-  min-height: 250px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e0e0e0;
 }
 
 .bill-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Header */
+/* ---------------- BADGE / STATUS ---------------- */
 .card-header {
-  padding: 8px 12px;
-  background-color: #ecf0f1;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  font-weight: 600;
-  border-bottom: 1px solid #ddd;
+  justify-content: flex-end;
 }
 
-/* Body */
+.badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 50px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.pending {
+  background-color: #f39c12; /* Amber */
+}
+
+.badge.completed {
+  background-color: #27ae60; /* Green */
+}
+
+.badge.cancelled {
+  background-color: #c0392b; /* Red */
+}
+
+/* ---------------- CARD BODY ---------------- */
 .card-body {
-  padding: 12px 16px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #333;
+  padding: 1rem 1.25rem;
 }
 
 .card-body p {
-  margin: 2px 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
-/* Table */
+/* ---------------- BILL TABLE ---------------- */
 .bill-table {
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.bill-table th,
+.bill-table th {
+  background-color: #f1f1f1;
+  text-align: center;
+  font-weight: 600;
+}
+
 .bill-table td {
-  padding: 6px 10px;
-  text-align: left;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #fff;
 }
 
-/* Footer */
+/* ---------------- CARD FOOTER ---------------- */
 .card-footer {
-  background-color: #f8f9fa;
-  padding: 10px 16px;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #ddd;
+  align-items: center;
 }
 
-/* Buttons */
-.btn {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 5px;
-  transition: 0.2s ease;
+.card-footer .btn {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
 }
 
 .btn-outline-warning {
-  color: #d35400;
+  color: #f39c12;
   border: 1px solid #f39c12;
   background-color: transparent;
 }
@@ -93,42 +119,22 @@ body {
 
 .btn-success {
   background-color: #27ae60;
-  color: #fff;
   border: none;
+  color: #fff;
 }
 
 .btn-success:hover {
-  background-color: #229954;
+  background-color: #219150;
 }
 
-/* Responsive Columns if needed */
-@media (max-width: 768px) {
-  .bill-card {
-    margin-bottom: 20px;
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 767px) {
+  .card-footer {
+    flex-direction: column;
+    gap: 10px;
   }
-}
-.badge {
-  padding: 4px 8px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: capitalize;
-  color: white;
-}
 
-/* Status-specific colors */
-.badge.pending {
-  background-color: #f39c12; /* orange */
-}
-
-.badge.completed {
-  background-color: #2ecc71; /* green */
-}
-
-.badge.cancelled {
-  background-color: #e74c3c; /* red */
-}
-
-.badge.inprogress {
-  background-color: #3498db; /* blue */
+  .section-title {
+    font-size: 1.5rem;
+  }
 }

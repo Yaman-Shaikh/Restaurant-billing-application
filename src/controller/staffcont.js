@@ -170,7 +170,7 @@ exports.getTables = (req, res) => {
 exports.getAllOrders = (req, res) => {
   const ordersQuery = `
     SELECT om.order_id, om.table_id, om.staff_id, s.name AS staff_name,
-           om.ord_date, om.ord_status
+     om.ord_date, om.ord_status
     FROM order_master om
     JOIN staff s ON om.staff_id = s.staff_id
     ORDER BY om.order_id DESC
@@ -339,8 +339,10 @@ exports.viewBill = async (req, res) => {
   try {
     // Get order details with table_id and ord_status
     const [orderResults] = await db.promise().execute(`
-      SELECT om.order_id, om.table_id, om.total_amt, om.ord_status, om.ord_date 
-      FROM order_master om 
+      SELECT om.*, s.name AS staff_name, t.table_id
+      FROM order_master om
+      JOIN staff s ON om.staff_id = s.staff_id
+      JOIN dinning_table t ON om.table_id = t.table_id
       WHERE om.order_id = ?
     `, [orderId]);
 
@@ -352,14 +354,20 @@ exports.viewBill = async (req, res) => {
 
     // Get items for that order
     const [itemResults] = await db.promise().execute(`
-      SELECT item_name, item_price, quantity, total 
-      FROM order_items 
-      WHERE order_id = ?
+      SELECT * FROM order_items WHERE order_id = ?
     `, [orderId]);
 
-    res.render("bill", {
+    const gst = (order.total_amt * 0.07).toFixed(2);
+    const discounted = (order.total_amt * 0.05).toFixed(2);
+    const grandTotal = order.total_amt - discounted + 2 * gst;
+
+    res.render("staff/bill", {
       order,
-      items: itemResults
+      items: itemResults,
+      gst,
+      discounted,
+      grandTotal: grandTotal.toFixed(2),
+      currentTime: new Date()
     });
 
   } catch (err) {
@@ -367,6 +375,7 @@ exports.viewBill = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
 exports.downloadBillPDF = async (req, res) => {
   const orderId = req.params.id;
 
@@ -450,27 +459,30 @@ exports.completeOrder = (req, res) => {
       return res.status(500).send("Database error");
     }
 
-    if (results.length === 0) {
+    if (!results || results.length === 0) {
       return res.status(404).send("Order not found");
     }
 
     const tableId = results[0].table_id;
+    if (!tableId) {
+      return res.status(404).send("Table ID missing for order");
+    }
 
     const updateOrderQuery = "UPDATE order_master SET ord_status = 'Completed' WHERE order_id = ?";
     db.query(updateOrderQuery, [orderId], (err2) => {
       if (err2) {
-        console.error("❌ Error updating order status:", err2);
-        return res.status(500).send("Could not update order");
+        console.error("❌ Error updating order:", err2);
+        return res.status(500).send("Database error");
       }
 
       const updateTableQuery = "UPDATE dinning_table SET availability_status = 'Available' WHERE table_id = ?";
       db.query(updateTableQuery, [tableId], (err3) => {
         if (err3) {
-          console.error("❌ Error updating table status:", err3);
-          return res.status(500).send("Could not update table status");
+          console.error("❌ Error updating table:", err3);
+          return res.status(500).send("Table update error");
         }
 
-        res.status(200).send("Order completed and table marked available");
+        res.status(200).send("Order completed and table marked as available");
       });
     });
   });

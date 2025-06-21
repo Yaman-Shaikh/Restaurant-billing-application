@@ -1,7 +1,4 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-
-
 <link rel="stylesheet" href="/css/staffmenu.css">
 
 <a href="/dashboard/staffdashboard" class="btn-back">🔙 Back to View Dining Tables</a>
@@ -33,20 +30,26 @@
     <p><strong>Date:</strong> <%= currentDate %></p>
     <hr>
     <h4>Order Items</h4>
-    <div class="order-items">
-      <!-- Item rows will be added here -->
-      <div id="orderForm" style="display: none; margin-top: 15px; background: #040404; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-        <h3 id="itemName"></h3>
-        <p>Price: <span id="itemPrice"></span></p>
-        <div style="margin-bottom: 10px;">
-          <button onclick="adjustQty(-1)">-</button>
-          <input type="number" id="qty" value="1" min="1" style="width:40px;" readonly>
-          <button onclick="adjustQty(1)">+</button>
-        </div>
-        <p>Total: ₹<span id="total"></span></p>
-        <button class="btn-confirm" type="button" style="background-color: green; color: white;">Confirm</button>
-        <button type="button" onclick="document.getElementById('orderForm').style.display='none'">Cancel</button>
+    <!-- Order summary area -->
+    <div class="order-items" id="orderSummary">
+      <!-- Dynamic items appear here -->
+    </div>
+    <hr>
+    <p><strong>Total Amount:</strong> ₹<span id="totalBill">0</span></p>
+    <button class="btn-confirm-final" type="button" style="background-color: #007bff; color: white;">Submit Order</button>
+
+    <!-- Order Form Box (hidden initially) -->
+    <div id="orderForm" style="display: none; margin-top: 15px; background: #040404; padding: 15px; border: 1px solid #ff0000; border-radius: 8px;">
+      <h3 id="itemName"></h3>
+      <p>Price: <span id="itemPrice"></span></p>
+      <div style="margin-bottom: 10px;">
+        <button onclick="adjustQty(-1)">-</button>
+        <input type="number" id="qty" value="1" min="1" style="width:40px;" readonly>
+        <button onclick="adjustQty(1)">+</button>
       </div>
+      <p>Total: ₹<span id="total"></span></p>
+      <button class="btn-confirm" type="button" style="background-color: green; color: white;">Confirm</button>
+      <button type="button" onclick="document.getElementById('orderForm').style.display='none'">Cancel</button>
     </div>
   </div>
 </div>
@@ -59,6 +62,7 @@
 <script>
   let selectedPrice = 0;
   let selectedItem = "";
+  let totalAmount = 0;
   const orderItems = [];
 
   function selectItem(name, price) {
@@ -83,58 +87,93 @@
     const qty = parseInt(document.getElementById('qty').value);
     const total = qty * selectedPrice;
 
-    orderItems.push({
+    const item = {
       name: selectedItem,
       price: selectedPrice,
       quantity: qty,
-      total: total
-    });
+      total: total,
+      id: Date.now()
+    };
+    orderItems.push(item);
 
-    // Update UI
-    const orderSection = document.querySelector('.menu-right .order-items');
-    const itemHTML = `
-      <div class="order-item">
-        <p><strong>${selectedItem}</strong> x ${qty} = ₹${total}</p>
-      </div>
+    const orderSection = document.getElementById('orderSummary');
+    const itemDiv = document.createElement('div');
+    itemDiv.className = "order-item";
+    itemDiv.setAttribute('data-id', item.id);
+    itemDiv.innerHTML = `
+      <p><strong>${item.name}</strong> x ${item.quantity} = ₹${item.total}</p>
+      <button onclick="removeItem(${item.id})" class="btn-remove">❌ Remove</button>
     `;
-    orderSection.insertAdjacentHTML('beforeend', itemHTML);
+    orderSection.appendChild(itemDiv);
 
-    // Hide form
+    totalAmount += total;
+    document.getElementById('totalBill').innerText = totalAmount;
+
     document.getElementById('orderForm').style.display = 'none';
+  });
 
-    // Debug log
-    console.log("Sending order:", {
-      tableId: Number("<%= tableId %>"),
-      staffId:1,
-      date: new Date().toISOString().split("T")[0],
-      items: orderItems
-    });
+  function removeItem(itemId) {
+    const index = orderItems.findIndex(item => item.id === itemId);
+    if (index !== -1) {
+      totalAmount -= orderItems[index].total;
+      document.getElementById('totalBill').innerText = totalAmount;
+      orderItems.splice(index, 1);
+      const itemDiv = document.querySelector(`[data-id="${itemId}"]`);
+      if (itemDiv) itemDiv.remove();
+    }
+  }
 
-    // Save order to server
-   fetch('/dashboard/save-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableId: Number("<%= tableId %>"),
-        staffId: 1,
-        date: new Date().toISOString().split("T")[0],
-        items: orderItems
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.message === 'Order stored') {
-        alert("Order added successfully.");
-        window.location.href = '/dashboard/tables';
-      } else {
-        alert("Something went wrong while saving the order.");
-      }
-    })
-    .catch(error => {
-      console.error("Save order fetch error:", error);
-      alert("Something went wrong while saving the order.");
-    });
+  document.querySelector('.btn-confirm-final').addEventListener('click', function () {
+    if (orderItems.length === 0) {
+      alert("Add at least one item before submitting the order.");
+      return;
+    }
+
+   const dateInput = document.getElementById('ord_date').value;
+const dateObj = new Date(dateInput);
+const yyyy = dateObj.getFullYear();
+const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+const dd = String(dateObj.getDate()).padStart(2, '0');
+const formattedDate = `${yyyy}-${mm}-${dd}`;
+const tableId = document.getElementById('table_id').value;
+const staffId = document.getElementById('staff_id').value;
+const orderData = {
+  tableId: tableId,
+  staffId: staffId,
+  date: formattedDate, // Use formatted date
+  items: orderItems
+};
+fetch('/dashboard/save-order', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(orderData)
+})
+  .then(async res => {
+    const contentType = res.headers.get("content-type");
+    if (!res.ok) {
+      const errMessage = await res.text();
+      throw new Error(errMessage);
+    }
+    if (contentType && contentType.includes("application/json")) {
+      return res.json();
+    } else {
+      throw new Error("Invalid JSON response");
+    }
+  })
+
+.then(data => {
+  alert("Order placed successfully!");
+ 
+  orderItems.length = 0;
+  totalAmount = 0;
+  document.getElementById('orderSummary').innerHTML = '';
+  document.getElementById('totalBill').innerText = '0';
+
+})
+
+  .catch(error => {
+    console.error("Error saving order:", error.message);
+  });
+
   });
 </script>

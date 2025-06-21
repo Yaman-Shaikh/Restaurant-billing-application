@@ -115,7 +115,7 @@ exports.Search=(name,callback)=>{
     });
 }
 
-// Example: get all categories
+
 exports.getCategories = (callback) => {
     conn.query("SELECT  id ,name FROM category", (err,result)=>{
         if(err)
@@ -288,7 +288,7 @@ exports.DeleteStaff = (id, callback) => {
     conn.query("DELETE FROM staff WHERE staff_id = ?", [id], callback);
 };
 
-// In model.js
+
 exports.AddTable = (tableNumber, capacity, availability) => {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO dinning_table (table_id, capacity, availability_status) VALUES (?, ?, ?)";
@@ -296,7 +296,7 @@ exports.AddTable = (tableNumber, capacity, availability) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(result.affectedRows); // this will be 1 if insert was successful
+                resolve(result.affectedRows); 
             }
         });
     });
@@ -318,7 +318,7 @@ exports.UpdateTable = (id, callback) => {
     });
 };
 
-// regmodel.js
+
 exports.updatetable = (id, capacity, availability_status, callback) => {
     const sql = "UPDATE dinning_table SET capacity = ?, availability_status = ? WHERE table_id = ?";
     conn.query(sql, [capacity, availability_status, id], (err, result) => {
