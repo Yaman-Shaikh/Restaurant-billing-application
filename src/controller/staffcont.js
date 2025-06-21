@@ -86,7 +86,6 @@ exports.getStaffDashboard = (req, res) => {
     res.render("StaffDashBord.ejs"); // ← This must exist and be spelled correctly
   });
 }
-
 exports.saveOrder = (req, res) => {
   console.log("Incoming order data:", req.body);
 
@@ -108,7 +107,6 @@ exports.saveOrder = (req, res) => {
       return res.status(500).send("Database error");
     }
 
-    // 1. Insert into order_master
     const insertOrder = "INSERT INTO order_master SET ?";
     connection.query(insertOrder, orderData, (err, result) => {
       if (err) {
@@ -119,7 +117,6 @@ exports.saveOrder = (req, res) => {
 
       const order_id = result.insertId;
 
-      // 2. Prepare and insert items
       const insertItems = `
         INSERT INTO order_items (order_id, item_name, item_price, quantity, total)
         VALUES ?
@@ -133,13 +130,24 @@ exports.saveOrder = (req, res) => {
       ]);
 
       connection.query(insertItems, [values], (err2) => {
-        connection.release();
         if (err2) {
+          connection.release();
           console.error("Error inserting order items:", err2);
           return res.status(500).send("Failed to save order items");
         }
 
-        res.json({ message: "Order stored" });
+        // ✅ Update table status to Occupied
+        const updateTableStatus = "UPDATE dinning_table SET availability_status = 'Occupied' WHERE table_id = ?";
+        connection.query(updateTableStatus, [tableId], (err3) => {
+          connection.release();
+
+          if (err3) {
+            console.error("Error updating table status:", err3);
+            return res.status(500).send("Failed to update table status");
+          }
+
+          res.json({ message: "Order stored" });
+        });
       });
     });
   });
@@ -205,25 +213,76 @@ exports.getAllOrders = (req, res) => {
 };
 
 
+// exports.markOrderAsComplete = (req, res) => {
+//   const orderId = req.params.id;
+
+//   const updateQuery = `
+//     UPDATE order_master
+//     SET ord_status = 'Completed'
+//     WHERE order_id = ?
+//   `;
+
+//   db.query(updateQuery, [orderId], (err, result) => {
+//     if (err) {
+//       console.error("Error updating order status:", err);
+//       return res.status(500).send("Failed to complete payment");
+//     }
+
+//     res.status(200).send("Order marked as complete");
+//   });
+// };
+
 exports.markOrderAsComplete = (req, res) => {
   const orderId = req.params.id;
 
-  const updateQuery = `
-    UPDATE order_master
-    SET ord_status = 'Completed'
-    WHERE order_id = ?
+  // Step 1: Get table_id for this order
+  const getTableIdQuery = `
+    SELECT table_id FROM order_master WHERE order_id = ?
   `;
 
-  db.query(updateQuery, [orderId], (err, result) => {
+  db.query(getTableIdQuery, [orderId], (err, results) => {
     if (err) {
-      console.error("Error updating order status:", err);
-      return res.status(500).send("Failed to complete payment");
+      console.error("❌ Error fetching table_id:", err);
+      return res.status(500).send("Failed to fetch table ID");
     }
 
-    res.status(200).send("Order marked as complete");
+    if (results.length === 0) {
+      return res.status(404).send("Order not found");
+    }
+
+    const tableId = results[0].table_id;
+
+    // Step 2: Update ord_status in order_master
+    const updateOrderQuery = `
+      UPDATE order_master
+      SET ord_status = 'Completed'
+      WHERE order_id = ?
+    `;
+
+    db.query(updateOrderQuery, [orderId], (err2) => {
+      if (err2) {
+        console.error("❌ Error updating order status:", err2);
+        return res.status(500).send("Failed to complete payment");
+      }
+
+      // Step 3: Update availability_status in dinning_table
+      const updateTableQuery = `
+        UPDATE dinning_table
+        SET availability_status = 'Available'
+        WHERE table_id = ?
+      `;
+
+      db.query(updateTableQuery, [tableId], (err3) => {
+        if (err3) {
+          console.error("❌ Error updating table status:", err3);
+          return res.status(500).send("Failed to update table availability");
+        }
+
+        res.status(200).send("Order completed and table marked as available");
+      });
+    });
   });
 };
-
 
 
 
@@ -380,5 +439,39 @@ exports.viewBills = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+exports.completeOrder = (req, res) => {
+  const orderId = req.params.id;
+  console.log("Complete Order ID:", orderId);
 
+  const getOrderQuery = "SELECT table_id FROM order_master WHERE order_id = ?";
+  db.query(getOrderQuery, [orderId], (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching order:", err);
+      return res.status(500).send("Database error");
+    }
 
+    if (results.length === 0) {
+      return res.status(404).send("Order not found");
+    }
+
+    const tableId = results[0].table_id;
+
+    const updateOrderQuery = "UPDATE order_master SET ord_status = 'Completed' WHERE order_id = ?";
+    db.query(updateOrderQuery, [orderId], (err2) => {
+      if (err2) {
+        console.error("❌ Error updating order status:", err2);
+        return res.status(500).send("Could not update order");
+      }
+
+      const updateTableQuery = "UPDATE dinning_table SET availability_status = 'Available' WHERE table_id = ?";
+      db.query(updateTableQuery, [tableId], (err3) => {
+        if (err3) {
+          console.error("❌ Error updating table status:", err3);
+          return res.status(500).send("Could not update table status");
+        }
+
+        res.status(200).send("Order completed and table marked available");
+      });
+    });
+  });
+};

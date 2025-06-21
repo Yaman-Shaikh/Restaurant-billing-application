@@ -15,7 +15,9 @@ app.get('/orders/:id/bill/pdf', staffController.downloadBillPDF);
 
 
 app.get('/ViewBills', staffController.viewBills);
-app.post('/orders/:id/complete', staffController.markOrderAsComplete);
+ app.post('/orders/:id/complete', staffController.markOrderAsComplete);
+
+app.post("/dashboard/orders/:id/complete", staffController.completeOrder);
 
 
 module.exports = app;
