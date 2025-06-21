@@ -8,14 +8,15 @@
 <div class="table-grid">
   <% tables.forEach(table => { %>
     <% if (table.availability_status === "Available") { %>
-      <div class="table-card available">
-        <h5>Table - <%= table.table_id %></h5>
-        <p>Capacity: <%= table.capacity %> people</p>
-      <a href="/dashboard/menus?table_id=<%= table.table_id %>">
-  <button class="btn-order">Take Order</button>
+      <a href="/dashboard/menus?table_id=<%= table.table_id %>" class="table-card-link">
+  <div class="table-card available">
+    <h5>Table - <%= table.table_id %></h5>
+    <p class="capacity-text">Capacity: <%= table.capacity %> people</p>
+    <button class="btn-order italic-button">Take Order</button>
+  </div>
 </a>
 
-      </div>
+
     <% } %>
   <% }); %>
 </div>

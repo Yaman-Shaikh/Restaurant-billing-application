@@ -1,161 +1,257 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
+/* === General Reset === */
+* {
   margin: 0;
   padding: 0;
-  background: #fdfdfd;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0e0e0e;
+  color: #fdfdfd;
+  line-height: 1.6;
+}
+
+/* === Back Button === */
 .btn-back {
   display: inline-block;
   margin: 20px;
-  padding: 10px 16px;
-  background-color: #ff4d4d;
-  color: #fff;
-  border-radius: 6px;
-  text-decoration: none;
+  background: linear-gradient(135deg, #f1c40f, #e67e22);
+  color: #0e0e0e;
+  padding: 10px 18px;
+  border-radius: 12px;
   font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 255, 0, 0.3);
+  transition: 0.3s ease;
+}
+.btn-back:hover {
+  background: #ffdd57;
+  transform: translateY(-2px);
 }
 
+/* === Layout === */
 .menu-container {
   display: flex;
+  padding: 30px;
   gap: 30px;
-  padding: 0 40px 40px 40px;
 }
 
+/* === Left Section === */
 .menu-left {
-  flex: 3;
-}
-
-.menu-right {
-  flex: 1;
-  padding: 20px;
-  border-left: 2px solid #eee;
-  background: #fff;
-  border-radius: 8px;
-  margin-top: 40px;
+  flex: 2;
 }
 
 .search-input {
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid #f1c40f;
+  background-color: #1a1a1a;
+  color: #fff;
   margin-bottom: 20px;
+  font-size: 16px;
 }
 
 .menu-title {
-  font-size: 28px;
-  margin: 0;
-}
-
-.subtitle {
-  margin-top: 4px;
-  color: #777;
-  margin-bottom: 20px;
-}
-
-.highlight {
-  color: #ff6600;
-}
-
-.category-filter {
-  margin-bottom: 20px;
-}
-
-.filter-btn {
-  padding: 8px 14px;
-  border: 1px solid #ff6600;
-  background: #fff;
-  color: #ff6600;
-  margin-right: 8px;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background: #ff6600;
+  font-size: 32px;
+  margin-bottom: 5px;
   color: #fff;
 }
 
+.highlight {
+  color: #f1c40f;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #bbbbbb;
+  margin-bottom: 20px;
+}
+
+/* === Menu Grid === */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 25px;
 }
 
 .menu-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: 0.3s ease;
 }
 
 .menu-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255, 255, 0, 0.3);
 }
 
 .menu-card img {
   width: 100%;
-  height: 100px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 12px;
   margin-bottom: 10px;
 }
 
 .menu-card h4 {
-  margin: 0;
+  color: #f1c40f;
   font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.menu-card p {
+  font-size: 14px;
+  color: #ccc;
 }
 
 .price {
+  margin: 10px 0;
   font-weight: bold;
-  margin-top: 5px;
-  color: #333;
+  color: #fff;
+  font-size: 16px;
 }
 
 .btn-add {
-  background: #007bff;
-  color: white;
+  background: #f1c40f;
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-add:hover {
+  background: #ffeb3b;
+  transform: scale(1.05);
+}
+
+/* === Right Section (Updated) === */
+.menu-right {
+  flex: 1;
+  background: linear-gradient(145deg, #1b1b1b, #262626);
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(241, 196, 15, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 550px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.menu-right h3 {
+  font-size: 22px;
+  color: #f1c40f;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #f1c40f;
+  padding-bottom: 6px;
+}
+
+.menu-right h4 {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  color: #ffeb3b;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.menu-right p {
+  color: #cccccc;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+/* Scrollbar for right panel */
+.menu-right::-webkit-scrollbar {
+  width: 8px;
+}
+.menu-right::-webkit-scrollbar-thumb {
+  background-color: #f1c40f;
+  border-radius: 4px;
+}
+.menu-right::-webkit-scrollbar-track {
+  background-color: #2a2a2a;
+}
+
+/* === Order Form (Updated Background) === */
+#orderForm {
+  background: rgba(255, 214, 10, 0.1);
+  border: 1px solid rgba(255, 214, 10, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(255, 214, 10, 0.3);
+}
+
+#orderForm h3 {
+  color: #f1c40f;
+  margin-bottom: 10px;
+}
+
+#qty {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #f1c40f;
+  border-radius: 6px;
+}
+
+#orderForm button {
   padding: 6px 12px;
   border: none;
-  border-radius: 5px;
   margin-top: 10px;
-  cursor: pointer;
-}
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.quantity-controls button {
-  background: #ff6600;
-  border: none;
-  color: white;
+  border-radius: 6px;
   font-weight: bold;
-  padding: 4px 10px;
-  border-radius: 5px;
   cursor: pointer;
-}
-
-.quantity-controls input {
-  width: 40px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 4px;
+  transition: all 0.3s ease;
 }
 
 .btn-confirm {
-  background: green;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 10px;
+  background-color: #2ecc71;
+  color: #fff;
+}
+.btn-confirm:hover {
+  background-color: #27ae60;
+}
+
+#orderForm button[type="button"]:not(.btn-confirm) {
+  background-color: #e74c3c;
+  color: #fff;
+}
+#orderForm button[type="button"]:not(.btn-confirm):hover {
+  background-color: #c0392b;
+}
+
+/* === Order Items Display === */
+.order-item {
+  background-color: #2a2a2a;
+  padding: 12px;
+  margin: 10px 0;
+  border-left: 4px solid #f1c40f;
+  border-radius: 8px;
+  color: #fff;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

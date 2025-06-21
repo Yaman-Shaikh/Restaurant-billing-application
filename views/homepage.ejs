@@ -3,93 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Delicious Bites | Home</title>
+  <title>Apna Kitchen | Home</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fffaf0;
-    }
+   body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212; /* deep black background */
+  color: #f1f1f1; /* light text for readability */
+}
 
-    header {
-      background-color: #8B0000;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+header {
+  background-color: #000000;
+  color: #ffc107; /* warm yellow */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.2);
+}
 
-    .hotel-info {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      background-color: #fff;
-      gap: 30px;
-    }
+.hotel-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #1e1e1e;
+  gap: 30px;
+}
 
-    .hotel-info img {
-      width: 500px;
-      max-width: 90%;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.hotel-info img {
+  width: 500px;
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.25);
+}
 
-    .hotel-text {
-      max-width: 600px;
-    }
+.hotel-text {
+  max-width: 600px;
+}
 
-    .hotel-text h2 {
-      color: #8B0000;
-      margin-bottom: 15px;
-    }
+.hotel-text h2 {
+  color: #ffc107;
+  margin-bottom: 15px;
+}
 
-    .menu-preview {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 40px 20px;
-      background-color: #fff8f0;
-    }
+.hotel-text p {
+  color: #dddddd;
+  line-height: 1.6;
+}
 
-    .menu-item {
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      overflow: hidden;
-      background-color: #fff;
-      transition: transform 0.3s;
-    }
+.menu-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+  background-color: #181818;
+}
 
-    .menu-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
+.menu-item {
+  width: 300px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #262626;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: #fff;
+}
 
-    .menu-item:hover {
-      transform: scale(1.05);
-    }
+.menu-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
 
-    .section {
-      text-align: center;
-      padding: 40px 20px;
-    }
+.menu-item h3 {
+  color: #ffc107;
+  padding: 10px 15px 0;
+}
 
-    footer {
-      background-color: #8B0000;
-      color: white;
-      text-align: center;
-      padding: 15px;
-    }
+.menu-item p {
+  padding: 0 15px 15px;
+  color: #ccc;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(255, 193, 7, 0.3);
+}
+
+.section {
+  text-align: center;
+  padding: 40px 20px;
+  color: black;
+}
+
+footer {
+  background-color: #000000;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.95rem;
+  border-top: 1px solid #333;
+}
+
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Delicious Bites</h1>
+    <h1>Apna Kitchen</h1>
     <p>Fine Dining Redefined</p>
   </header>
 
@@ -97,9 +120,9 @@
   <section class="hotel-info">
     <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb" alt="Hotel View">
     <div class="hotel-text">
-      <h2>Welcome to Delicious Bites</h2>
+      <h2>Welcome to Apna Kitchen</h2>
       <p>
-        Located in the heart of the city, Delicious Bites offers a warm and elegant atmosphere, perfect for both casual meals and special occasions.
+        Located in the heart of the city, Apna Kitchen offers a warm and elegant atmosphere, perfect for both casual meals and special occasions.
         We specialize in Indian, Italian, and Continental cuisines made with the freshest ingredients and a touch of love.
       </p>
       <p>
@@ -133,7 +156,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2025 Delicious Bites. All rights reserved.</p>
+    <p>&copy; 2025 Apna Kitchen. All rights reserved.</p>
   </footer>
 
 </body>

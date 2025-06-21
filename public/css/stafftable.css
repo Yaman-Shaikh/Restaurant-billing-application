@@ -1,122 +1,158 @@
-/* Headings */
-.section-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #222;
-  margin: 20px 0 10px;
-  border-left: 5px solid #ff6600;
-  padding-left: 10px;
+/* === Reset & Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #fdfdfd;
 }
 
-/* Grid container */
+/* === Section Container === */
+#table-section {
+  padding: 40px 60px;
+  background: #1a1a1a;
+}
+
+/* === Section Titles === */
+.section-title {
+  font-size: 28px;
+  color: #f1c40f;
+  margin-bottom: 20px;
+  border-left: 5px solid #f1c40f;
+  padding-left: 15px;
+}
+
+/* === Table Grid Layout === */
 .table-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
   margin-bottom: 40px;
 }
 
-/* Table Card */
+/* === Table Card Wrapper as Link === */
+.table-card-link {
+  text-decoration: none;
+}
+
+/* === Table Card === */
 .table-card {
-  background-color: #ffffff;
-  border-radius: 15px;
-  width: 180px;
+  border-radius: 16px;
   padding: 20px;
-  text-align: center;
+  background: linear-gradient(145deg, #1e1e1e, #292929);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
+  text-align: center;
+  animation: fadeInUp 0.5s ease both;
+  cursor: pointer;
+  position: relative;
 }
 
 .table-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(241, 196, 15, 0.3);
 }
 
-/* Available table */
-.table-card.available {
-  background: linear-gradient(145deg, #ffffff, #f3f3f3);
-}
-
-/* Occupied table */
-.table-card.occupied {
-  background-color: #f2f2f2;
-  opacity: 0.9;
-}
-
-/* Table Title */
 .table-card h5 {
-  margin: 10px 0 5px;
-  font-size: 18px;
-  color: #ff6600;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-/* Capacity text */
 .table-card p {
   font-size: 14px;
-  color: #444;
+  color: #ccc;
   margin-bottom: 15px;
 }
 
-/* Order Button */
+/* === Card Borders by Status === */
+.table-card.available {
+  border-left: 5px solid #2ecc71;
+}
+.table-card.occupied {
+  border-left: 5px solid #e74c3c;
+}
+
+/* === Button Styling === */
 .btn-order {
-  background-color: #ff6600;
-  color: #fff;
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 500;
+  background-color: #f1c40f;
+  color: #1a1a1a;
   border: none;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 .btn-order:hover {
-  background-color: #e65c00;
+  background-color: #ffe600;
+  transform: scale(1.05);
 }
 
-/* Occupied button */
-.btn-order.occupied-btn {
-  background-color: #999;
+/* === Occupied Button === */
+.occupied-btn {
+  background-color: #444;
+  color: #999;
   cursor: not-allowed;
 }
+
+/* === Divider === */
+hr {
+  border: 0;
+  height: 1px;
+  background: #333;
+  margin: 40px 0;
+}
+
+/* === Hidden === */
 .hidden {
   display: none;
 }
 
-.blurred {
-  filter: blur(3px);
-  pointer-events: none;
+/* === Animation Keyframes === */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-#menu-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  overflow-y: auto;
-  padding: 30px;
-  z-index: 1000;
+/* === Responsive === */
+@media (max-width: 768px) {
+  #table-section {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .table-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .btn-order {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
 }
-.hidden {
-  display: none;
+.capacity-text {
+  font-style: italic;
+  color: #cccccc;
 }
 
-.blurred {
-  filter: blur(4px);
-  pointer-events: none;
+.italic-button {
+  font-style: italic;
 }
-
-#menu-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  background: white;
-  z-index: 9999;
-  padding: 20px;
+.table-card-link:hover .table-card {
+  box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+  transform: scale(1.02);
+  transition: 0.3s ease;
 }

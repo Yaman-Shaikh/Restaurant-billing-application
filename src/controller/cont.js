@@ -69,8 +69,7 @@ exports.AdCatagory=(req,res)=>{
 
 exports.addcatagory=(req,res)=>{
     let{categoryName}=req.body;
-    let result=model
-    .addcatagory(categoryName);
+    let result=model.addcatagory(categoryName);
     if(result==true)
     {
         res.render("addcategory.ejs",{msg:"category add successfully"});
