@@ -148,18 +148,7 @@ h1 {
         <h3>Order ID: <%= order.order_id %></h3>
         <% if (order.table_no) { %><p><strong>Table:</strong> <%= order.table_no %></p><% } %>
       <% let status = order.status && order.status.trim() !== '' ? order.status.trim() : 'Pending'; %>
-<!-- <p><strong>Status:</strong> 
-  <span style="
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 15px;
-    font-size: 13px;
-    font-weight: bold;
-    background-color: <%= status === 'Completed' ? '#28a745' : status === 'Cancelled' ? '#dc3545' : '#ffc107' %>;
-    color: white;">
-    <%= status %>
-  </span>
-</p> -->
+
 
 
         <h4>Items:</h4>

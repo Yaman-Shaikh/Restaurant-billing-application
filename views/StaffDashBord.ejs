@@ -1,44 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Bootstrap and Icons -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css" />
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h4><i class="bi bi-cup-hot-fill"></i> FOODIES KITCHEN</h4>
+  <link rel="stylesheet" href="/css/staffDashboard.css" />
 
-    <a href="/dashboard" class="nav-link active meanu-link"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+  <title>Staff Dashboard</title>
+</head>
+<body>
 
-    <div class="nav-link" onclick="toggleSubmenu('menuSection')">
-     <a href="/dashboard/tables" class="nav-link meanu-link"><i class="bi bi-journal-text "></i>Menu</a>
+  <!-- Sidebar toggle button (mobile only) -->
+  <button id="sidebarToggle" class="btn btn-dark d-md-none m-2">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar bg-dark text-white p-3" id="sidebar">
+      <h4 class="mb-4"><i class="bi bi-cup-hot-fill"></i> FOODIES KITCHEN</h4>
+
+      <a href="/dashboard" class="nav-link active"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+
+    <div class="nav-link" data-toggle="menuSection">
+     <a href="/dashboard/tables" class="nav-link"> <i class="bi bi-journal-text"></i>Menu</a>
+  </div>
+  
+
+      <a href="/dashboard/orders" class="nav-link"><i class="bi bi-cart-fill"></i> Orders</a>
+      <a href="/dashboard/ViewBills" class="nav-link"><i class="bi bi-receipt-cutoff"></i> Bills</a>
+
+      <div class="logout">
+        <a href="/" class="nav-link text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </div>
     </div>
-    
-    <a href="/dashboard/orders" class="nav-link meanu-link" ><i class="bi bi-bag-check-fill "></i> Orders</a>
-    <a href="/dashbaord/orders/:id/bill" class="nav-link meanu-link"><i class="bi bi-receipt-cutoff "></i> Bills</a>
-    <a class="nav-link meanu-link"><i class="bi bi-bar-chart-line-fill meanu-link"></i> Reports</a>
 
-    <div style="position: absolute; bottom: 20px; width: 100%;">
-      <a class="nav-link text-danger" href="/">
-        <i class="bi bi-box-arrow-right"></i> Logout
-      </a>
+    <!-- Main Content -->
+    <div class="content p-4">x
+      <h1>Welcome to Staff Dashboard</h1>
+      <p>This is the staff panel. Use the sidebar to navigate.</p>
     </div>
   </div>
-  <!-- Content -->
-  <div class="content" id="content-area">
-    <h1>Welcome to Admin Dashboard</h1>
-    <p>Use the sidebar to navigate different admin features.</p>
-  </div>
 
-  <!-- Script -->
+  <!-- JS for sidebar toggle & submenu -->
   <script>
-    function toggleSubmenu(id) {
-      document.querySelectorAll('.submenu').forEach(menu => {
-        if (menu.id !== id) menu.classList.remove('show');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.nav-link[data-toggle]').forEach(link => {
+      link.addEventListener('click', () => {
+        const id = link.getAttribute('data-toggle');
+        const submenu = document.getElementById(id);
+        submenu.classList.toggle('show');
       });
-      const submenu = document.getElementById(id);
-      submenu.classList.toggle('show');
-    }
+    });
+
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          sidebar.classList.remove('show');
+        }
+      });
+    });
   </script>
+
+</body>
+</html>

@@ -9,152 +9,162 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
   <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
- body {
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  background: url('https://i.pinimg.com/736x/6e/3f/ff/6e3fff9ebae77ce389b4569186cf9eb9.jpg') center center no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  height: 100vh;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ffc107;
-  position: relative;
-}
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: url('https://i.pinimg.com/736x/6e/3f/ff/6e3fff9ebae77ce389b4569186cf9eb9.jpg') center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffc107;
+      padding: 20px;
+    }
 
-.login-container {
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 20px;
-  padding: 45px 35px;
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 30px rgba(255, 193, 7, 0.25);
-  backdrop-filter: blur(12px);
-  transition: all 0.4s ease-in-out;
-}
+    .login-container {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      padding: 45px 35px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 30px rgba(255, 193, 7, 0.25);
+      backdrop-filter: blur(12px);
+      transition: all 0.4s ease-in-out;
+    }
 
-.login-container:hover {
-  box-shadow: 0 10px 40px rgba(255, 193, 7, 0.3);
-  transform: scale(1.01);
-}
+    .login-container:hover {
+      box-shadow: 0 10px 40px rgba(255, 193, 7, 0.3);
+      transform: scale(1.01);
+    }
 
-.logo img {
-  width: 95px;
-  height: 95px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 25px;
-  border: 3px solid #ffc107;
-  box-shadow: 0 4px 20px rgba(255, 193, 7, 0.4);
-}
+    .logo img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 3px solid #ffc107;
+      box-shadow: 0 4px 20px rgba(255, 193, 7, 0.4);
+    }
 
-h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #ffc107;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
-}
+    h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffc107;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-.input-group {
-  display: flex;
-  align-items: center;
-  background: #1f1f1f;
-  padding: 14px 18px;
-  border-radius: 40px;
-  border: 1px solid #444;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 0 transparent;
-}
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: #1f1f1f;
+      padding: 12px 18px;
+      border-radius: 40px;
+      border: 1px solid #444;
+      transition: all 0.3s ease;
+    }
 
-.input-group i {
-  color: #ffc107;
-  margin-right: 12px;
-  font-size: 16px;
-}
+    .input-group i {
+      color: #ffc107;
+      margin-right: 12px;
+      font-size: 15px;
+    }
 
-.input-group input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 15px;
-  background: transparent;
-  color: #fff;
-}
+    .input-group input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 15px;
+      background: transparent;
+      color: #fff;
+    }
 
-.input-group:focus-within {
-  border-color: #ffc107;
-  box-shadow: inset 0 0 10px rgba(255, 193, 7, 0.3);
-}
+    .input-group:focus-within {
+      border-color: #ffc107;
+      box-shadow: inset 0 0 10px rgba(255, 193, 7, 0.3);
+    }
 
-.sign-in-button {
-  background-color: #ffc107;
-  color: #000;
-  border: none;
-  padding: 12px;
-  border-radius: 40px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s ease;
-  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-  letter-spacing: 0.5px;
-}
+    .sign-in-button {
+      background-color: #ffc107;
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+      letter-spacing: 0.5px;
+    }
 
-.sign-in-button:hover {
-  background-color: #e0a800;
-  box-shadow: 0 8px 30px rgba(255, 193, 7, 0.6);
-  transform: scale(1.03);
-}
+    .sign-in-button:hover {
+      background-color: #e0a800;
+      box-shadow: 0 8px 30px rgba(255, 193, 7, 0.6);
+      transform: scale(1.03);
+    }
 
-p {
-  margin-top: 18px;
-  color: #ff4d4d;
-  font-size: 14px;
-  letter-spacing: 0.3px;
-}
+    p {
+      margin-top: 15px;
+      color: #ff4d4d;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      word-break: break-word;
+    }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-  .login-container {
-    padding: 30px 25px;
-    margin: 10px;
-  }
+    /* Extra responsive tweaks */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 35px 25px;
+      }
 
-  h2 {
-    font-size: 24px;
-  }
+      h2 {
+        font-size: 22px;
+      }
 
-  .input-group input {
-    font-size: 14px;
-  }
-}
+      .input-group input {
+        font-size: 14px;
+      }
 
+      .logo img {
+        width: 80px;
+        height: 80px;
+      }
+    }
 
-</style>
+    @media (max-width: 360px) {
+      .login-container {
+        padding: 30px 20px;
+      }
 
+      .sign-in-button {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="login-container">
     <div class="logo">
       <img
         src="https://i.pinimg.com/736x/11/14/23/111423e0fba0210216bfa8846edbda8a.jpg"
-        alt="Logo"
+        alt="Apna Kitchen Logo"
       />
     </div>
 
@@ -168,12 +178,7 @@ p {
 
       <div class="input-group">
         <i class="fas fa-lock"></i>
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          required
-        />
+        <input type="password" placeholder="Password" name="password" required />
       </div>
 
       <button type="submit" class="sign-in-button">SIGN IN</button>

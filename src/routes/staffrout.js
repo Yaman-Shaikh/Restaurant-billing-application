@@ -1,7 +1,9 @@
 const express = require("express");
 const app= express.Router(); // ✅ Use router
 const staffController = require("../controller/staffcont"); // ✅ Correct controller
+
 app.get('/', staffController.getDashboardData);
+
 app.get('/dashboard', staffController.getDashboardData);
 app.get('/tables', staffController.getTablesPage);
 app.get('/menus', staffController.getMenusPage);

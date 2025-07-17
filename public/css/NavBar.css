@@ -23,6 +23,9 @@ nav {
   margin-right: 10px;
   border-radius: 10px;
   border: 2px solid #ffc107;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
 }
 
 .navbar-toggler {
@@ -30,7 +33,13 @@ nav {
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' ... %3E%3C/svg%3E");
+  filter: invert(50%);
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -62,14 +71,93 @@ nav {
   box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
 }
 
+/* ============================
+   ✅ RESPONSIVE BREAKPOINTS
+   ============================ */
+
+@media (max-width: 992px) {
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .navbar-nav .nav-item {
+    width: 100%;
+    text-align: left;
+    margin: 5px 0;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+  }
+
+  .navbar-nav .nav-item:last-child .btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 30px;
+    margin-top: 10px;
+  }
+}
 @media (max-width: 768px) {
   .navbar-nav {
-    gap: 10px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100%;
+    gap: 0;
+  }
+
+  .navbar-nav .nav-item {
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+  }
+
+  .navbar-nav .nav-item:last-child .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    padding: 12px 20px;
+    border-radius: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-nav {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100%;
+    gap: 0;
     margin-top: 10px;
   }
 
   .navbar-nav .nav-item {
     width: 100%;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+  }
+
+  .navbar-nav .nav-item:last-child .btn {
+    display: block;
+    width: 100%;
     text-align: center;
+    margin: 10px 0 0;
+    padding: 12px 20px;
+    border-radius: 30px;
   }
 }
+

@@ -8,6 +8,7 @@ exports.homepage=(req,res)=>{
     res.render("home.ejs");
 }
 exports.loginpage=(req,res)=>{
+  
     res.render("login.ejs",{msg:""});
 }
 exports.login = async (req, res) => {
@@ -37,6 +38,7 @@ exports.login = async (req, res) => {
         // Set dashboard view
         const dashboard = role === "admin" ? "AdminDashBord" : "StaffDashBord";
         res.render(dashboard, { user: result[0] });
+        // es.render(dashboard, {filename:"no",user:result[0]});
 
     } catch (err) {
         console.error("Login error:", err);
